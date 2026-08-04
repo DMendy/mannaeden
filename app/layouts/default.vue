@@ -1,0 +1,166 @@
+<script setup lang="ts">
+const { user, logout } = useAuth()
+const router = useRouter()
+const menuOpen = ref(false)
+
+function handleLogout() {
+  logout()
+  router.push('/')
+  menuOpen.value = false
+}
+
+watch(() => router.currentRoute.value.path, () => {
+  menuOpen.value = false
+})
+</script>
+
+<template>
+  <div>
+    <NuxtRouteAnnouncer />
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <NuxtLink to="/" class="brand">mannaeden</NuxtLink>
+
+        <button
+          class="hamburger"
+          :class="{ 'hamburger--open': menuOpen }"
+          aria-label="Ouvrir le menu"
+          @click="menuOpen = !menuOpen"
+        >
+          <span /><span /><span />
+        </button>
+
+        <nav class="nav" :class="{ 'nav--open': menuOpen }">
+          <NuxtLink to="/planner" @click="menuOpen = false">Notre planner</NuxtLink>
+          <NuxtLink to="/comment-ca-marche" @click="menuOpen = false">Comment ça marche</NuxtLink>
+          <NuxtLink to="/boutique" @click="menuOpen = false">Boutique</NuxtLink>
+          <span class="nav-sep" />
+          <template v-if="user">
+            <NuxtLink to="/compte" @click="menuOpen = false">{{ user.prenom }}</NuxtLink>
+            <button class="link-btn danger" @click="handleLogout">Déconnexion</button>
+          </template>
+          <template v-else>
+            <NuxtLink to="/connexion" @click="menuOpen = false">Connexion</NuxtLink>
+            <NuxtLink to="/inscription" class="btn btn-primary btn--nav" @click="menuOpen = false">Commencer</NuxtLink>
+          </template>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container page">
+      <slot />
+    </main>
+  </div>
+</template>
+
+<style scoped>
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  background: rgba(245, 240, 232, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1rem;
+}
+
+.brand {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  color: var(--color-green-deep);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.nav a {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  transition: color 0.2s;
+}
+
+.nav a:hover,
+.nav a.router-link-active {
+  color: var(--color-text);
+}
+
+.nav-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--color-border);
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  transition: color 0.2s;
+}
+
+.link-btn.danger:hover { color: var(--color-danger); }
+
+.btn--nav {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.82rem;
+}
+
+.page { padding-block: 3rem; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--color-text);
+  transition: all 0.25s;
+  transform-origin: center;
+}
+
+.hamburger--open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger--open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger--open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+
+  .nav {
+    display: none;
+    position: fixed;
+    inset: 0;
+    top: 61px;
+    background: var(--color-bg);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 1.1rem;
+    z-index: 99;
+  }
+
+  .nav--open { display: flex; }
+  .nav-sep { display: none; }
+  .btn--nav { padding: 0.7rem 2rem; }
+}
+</style>
