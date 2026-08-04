@@ -315,7 +315,7 @@ watch(() => router.currentRoute.value.path, () => {
 
 .overlay-nav-label {
   font-family: var(--font-serif);
-  font-size: clamp(2.8rem, 7vw, 6.5rem);
+  font-size: clamp(1.6rem, 3.2vw, 2.8rem);
   font-weight: 600;
   line-height: 1.05;
   color: rgba(245, 240, 232, 0.82);
@@ -326,10 +326,12 @@ watch(() => router.currentRoute.value.path, () => {
 
 /* Footer */
 .overlay-footer {
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 2;
-  margin-top: auto;
-  padding: 2rem clamp(2rem, 8vw, 8rem);
+  padding: 1.75rem clamp(2rem, 8vw, 8rem);
   display: flex;
   align-items: center;
   justify-content: space-between;
