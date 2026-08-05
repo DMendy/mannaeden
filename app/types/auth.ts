@@ -85,6 +85,16 @@ export interface Order {
   updatedAt: string
 }
 
+export interface UpdateProfilePayload {
+  civilite?: Civilite
+  telephone?: string
+  adresseLigne1?: string
+  adresseLigne2?: string
+  codePostal?: string
+  ville?: string
+  pays?: string
+}
+
 export interface CheckoutPayload {
   productId: string
   quantite: number

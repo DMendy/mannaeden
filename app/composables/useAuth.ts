@@ -1,4 +1,4 @@
-import type { AuthResponse, AuthUser, LoginPayload, RegisterPayload } from '~/types/auth'
+import type { AuthResponse, AuthUser, LoginPayload, RegisterPayload, UpdateProfilePayload } from '~/types/auth'
 
 interface ApiErrorBody {
   message?: string | string[]
@@ -53,10 +53,16 @@ export function useAuth() {
     }
   }
 
+  async function updateMe(payload: UpdateProfilePayload) {
+    const updated = await api<AuthUser>('/auth/me', { method: 'PATCH', body: payload })
+    user.value = updated
+    return updated
+  }
+
   function logout() {
     token.value = null
     user.value = null
   }
 
-  return { user, token, api, login, register, fetchMe, logout }
+  return { user, token, api, login, register, fetchMe, updateMe, logout }
 }
