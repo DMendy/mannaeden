@@ -31,9 +31,11 @@ watch(() => router.currentRoute.value.path, () => {
         </button>
 
         <nav class="nav" :class="{ 'nav--open': menuOpen }">
-          <NuxtLink to="/planner" @click="menuOpen = false">Notre planner</NuxtLink>
-          <NuxtLink to="/comment-ca-marche" @click="menuOpen = false">Comment ça marche</NuxtLink>
-          <NuxtLink to="/boutique" @click="menuOpen = false">Boutique</NuxtLink>
+          <NuxtLink to="/qui-sommes-nous" @click="menuOpen = false">Qui sommes-nous ?</NuxtLink>
+          <NuxtLink to="/boutique" @click="menuOpen = false">Le catalogue</NuxtLink>
+          <NuxtLink to="/planner" @click="menuOpen = false">Pour qui ?</NuxtLink>
+          <NuxtLink to="/nos-valeurs" @click="menuOpen = false">Nos valeurs</NuxtLink>
+          <NuxtLink to="/contact" @click="menuOpen = false">Contact</NuxtLink>
           <span class="nav-sep" />
           <template v-if="user">
             <NuxtLink to="/compte" @click="menuOpen = false">{{ user.prenom }}</NuxtLink>
@@ -56,7 +58,7 @@ watch(() => router.currentRoute.value.path, () => {
 <style scoped>
 .site-header {
   border-bottom: 1px solid var(--color-border);
-  background: rgba(245, 240, 232, 0.92);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   position: sticky;
