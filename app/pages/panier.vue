@@ -88,7 +88,7 @@ async function onSubmit() {
               <div>
                 <h2 class="form-section__title">Adresse de livraison</h2>
                 <p class="form-section__hint">
-                  <span class="verse-text" style="font-size: 0.9rem; color: var(--color-gold)">
+                  <span class="verse-text" style="font-size: 0.9rem; color: var(--color-green-mid)">
                     « Là où tu iras, j'irai. »
                   </span>
                   <span class="verse-ref" style="display: block; margin-top: 0.2rem">Ruth 1:16</span>
@@ -121,7 +121,7 @@ async function onSubmit() {
               </label>
 
               <div class="form-section__divider">
-                <span class="eyebrow" style="color: var(--color-gold)">Adresse</span>
+                <span class="eyebrow" style="color: var(--color-green-mid)">Adresse</span>
               </div>
 
               <label class="field">
@@ -230,7 +230,7 @@ async function onSubmit() {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: clamp(2rem, 4vw, 3.5rem);
-  color: rgba(61, 92, 61, 0.04);
+  color: rgba(53, 64, 40, 0.04);
   text-align: center;
   max-width: 800px;
   padding-inline: 2rem;
@@ -285,7 +285,7 @@ async function onSubmit() {
   font-family: var(--font-serif);
   font-size: 2.5rem;
   font-weight: 300;
-  color: var(--color-gold);
+  color: var(--color-green-mid);
   line-height: 1;
   flex-shrink: 0;
 }
@@ -388,7 +388,7 @@ async function onSubmit() {
   font-family: var(--font-serif);
   font-size: 0.65rem;
   letter-spacing: 0.08em;
-  color: rgba(245, 240, 232, 0.7);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .recap-name {

@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 definePageMeta({ layout: 'full' })
 
 const LINE1 = 'Planifiez avec intention,'
-const line1Chars = [...LINE1]
+const line1Chars = [...LINE1].map(c => c === ' ' ? ' ' : c)
 
 const root = ref<HTMLElement | null>(null)
 let ctx: gsap.Context
@@ -293,7 +293,7 @@ function setupReveals() {
 
 .title-row__inner { display: block; }
 
-.char { display: inline-block; will-change: transform; }
+.char { display: inline-block; will-change: transform; white-space: pre; }
 
 .title-row--em { margin-top: 0.04em; }
 
