@@ -12,27 +12,65 @@ const { fetchAll } = useProduct()
 
 const product = ref<Product | null>(null)
 const loading = ref(true)
-const error = ref(false)
+
+const galleryImages = [
+  { src: '/7FCFADDB-776F-42F0-A48A-CEDCA69D4E22.PNG', alt: 'Couverture Graines de Foi' },
+  { src: '/AE054CF9-9FB6-4FE6-97AB-2DC88E876BAA.PNG', alt: 'Pages intérieures — méditation quotidienne' },
+  { src: '/6A964402-0B8C-429D-8601-BF59AB787AFA.PNG', alt: 'Page Dessin' },
+  { src: '/5CE7F5F9-E94F-4BD1-A942-AA21679C2DBD.PNG', alt: 'Dos du planner — GICQUIAUD Camille' },
+]
+const activeImg = ref(0)
+
+const contents = [
+  'Une page de couverture',
+  'Une page d\'accueil de présentation',
+  'Une page expliquant comment bien commencer son utilisation',
+  'Un journal de gratitude',
+  'Deux pages présentant les thèmes abordés chaque mois',
+  'Un bilan spirituel hebdomadaire',
+  'Une page mensuelle dédiée à l\'explication du thème du mois',
+  'Un espace de méditation pour chaque jour de l\'année',
+  '13 témoignages',
+  'Des défis répartis tout au long de l\'année — communion, introspection, créativité, confiance en soi, partage et amour',
+  'Des pages consacrées à la prière',
+  'Une « To Do List » des exaucements de prières',
+  'Un journal de rêves — notes, interprétation et prières associées',
+  'Une partie « Notes » pour écrire librement',
+  'Une partie « Dessin » pour exprimer librement ses ressentis',
+]
 
 onMounted(async () => {
+  gsap.registerPlugin(ScrollTrigger)
+
   try {
     const products = await fetchAll()
     product.value = products[0] ?? null
   } catch {
-    error.value = true
+    // silently fail, show fallback
   } finally {
     loading.value = false
   }
 
+  await nextTick()
+
   ctx = gsap.context(() => {
     gsap.timeline({ delay: 0.1 })
-      .from('.shop-hero__eyebrow', { opacity: 0, y: 10, duration: 0.5 })
-      .from('.shop-hero__title', { opacity: 0, y: 45, duration: 1, ease: 'power4.out' }, '-=0.2')
+      .from('.shop-eyebrow', { opacity: 0, y: 10, duration: 0.5 })
+      .from('.shop-title', { opacity: 0, y: 45, duration: 1, ease: 'power4.out' }, '-=0.2')
+      .from('.gallery', { opacity: 0, x: -30, duration: 0.9, ease: 'power3.out' }, '-=0.6')
+      .from('.product-info > *', { opacity: 0, y: 20, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, '-=0.4')
 
     gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(el => {
       gsap.from(el, {
         opacity: 0, y: 35, duration: 0.85, ease: 'power3.out',
         scrollTrigger: { trigger: el, start: 'top 88%' }
+      })
+    })
+
+    gsap.utils.toArray<HTMLElement>('[data-stagger]').forEach(container => {
+      gsap.from(Array.from(container.children) as HTMLElement[], {
+        opacity: 0, y: 25, duration: 0.65, stagger: 0.08, ease: 'power2.out',
+        scrollTrigger: { trigger: container, start: 'top 85%' }
       })
     })
   }, root.value!)
@@ -41,21 +79,20 @@ onMounted(async () => {
 onUnmounted(() => ctx?.revert())
 
 const prix = computed(() => {
-  if (!product.value) return ''
+  if (!product.value) return '39,90 €'
   return (product.value.prixUnitaire / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
 })
 
 const stockLabel = computed(() => {
-  if (!product.value) return ''
+  if (!product.value) return 'En stock'
   if (product.value.stock === 0) return 'Rupture de stock'
   if (product.value.stock <= 5) return `Plus que ${product.value.stock} exemplaire${product.value.stock > 1 ? 's' : ''}`
   return 'En stock'
 })
 
 const stockClass = computed(() => {
-  if (!product.value || product.value.stock === 0) return 'stock--out'
-  if (product.value.stock <= 5) return 'stock--low'
-  return 'stock--ok'
+  if (!product.value || product.value.stock > 0) return 'stock--ok'
+  return 'stock--out'
 })
 
 function handleOrder() {
@@ -70,96 +107,118 @@ function handleOrder() {
 <template>
   <div ref="root">
 
-    <!-- ══ HERO ══ -->
-    <section class="shop-hero section--alt">
-      <div class="container">
-        <span class="shop-hero__eyebrow eyebrow">La boutique</span>
-        <h1 class="shop-hero__title">mannaeden,<br><em>le planner.</em></h1>
+    <!-- ══ PRODUCT HERO ══ -->
+    <section class="shop-hero">
+      <div class="container shop-layout">
+
+        <!-- Gallery -->
+        <div class="gallery">
+          <div class="gallery__main">
+            <Transition name="fade-img" mode="out-in">
+              <img
+                :key="activeImg"
+                :src="galleryImages[activeImg].src"
+                :alt="galleryImages[activeImg].alt"
+              />
+            </Transition>
+          </div>
+          <div class="gallery__thumbs">
+            <button
+              v-for="(img, i) in galleryImages"
+              :key="i"
+              class="gallery__thumb"
+              :class="{ 'gallery__thumb--active': activeImg === i }"
+              @click="activeImg = i"
+            >
+              <img :src="img.src" :alt="img.alt" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Product info -->
+        <div class="product-info">
+          <span class="shop-eyebrow eyebrow">Planner physique · Format A5</span>
+          <h1 class="shop-title">{{ product?.nom ?? 'Graines de Foi' }}</h1>
+          <div class="divider" />
+
+          <p class="product-desc">
+            Un compagnon annuel créé par Camille Gicquiaud pour nourrir votre vie spirituelle, structurer vos journées et vous accompagner dans la foi — chaque matin, chaque semaine, toute l'année.
+          </p>
+
+          <ul class="product-teaser">
+            <li>Un espace de méditation pour chaque jour de l'année</li>
+            <li>Bilans hebdomadaires et mensuels</li>
+            <li>Journal de rêves, de prières et de gratitude</li>
+            <li>13 témoignages &amp; des défis spirituels</li>
+          </ul>
+
+          <div v-if="loading" class="product-bottom">
+            <div class="skeleton skeleton--price" />
+            <div class="skeleton skeleton--btn" />
+          </div>
+
+          <div v-else class="product-bottom">
+            <div class="product-price-row">
+              <span class="product-price">{{ prix }}</span>
+              <span class="product-stock" :class="stockClass">{{ stockLabel }}</span>
+            </div>
+
+            <button
+              class="btn btn-primary product-cta"
+              :disabled="product?.stock === 0"
+              @click="handleOrder"
+            >
+              {{ product?.stock === 0 ? 'Rupture de stock' : user ? 'Commander →' : 'Commander — créer un compte' }}
+            </button>
+
+            <p v-if="!user" class="product-auth-hint">
+              Un compte est nécessaire pour commander.
+              <NuxtLink to="/inscription">Créer un compte gratuitement →</NuxtLink>
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ══ PRODUCT ══ -->
-    <section class="section">
+    <!-- ══ PHOTOS CAMILLE ══ -->
+    <section class="camille-section">
+      <div class="camille-grid">
+        <div class="camille-img camille-img--main">
+          <img src="/DSC03471.jpg" alt="Camille Gicquiaud lisant le planner Graines de Foi" />
+        </div>
+        <div class="camille-right">
+          <div class="camille-img camille-img--secondary">
+            <img src="/DSC03983.jpg" alt="Camille Gicquiaud, fondatrice de mannaeden" />
+          </div>
+          <div class="camille-img camille-img--pages">
+            <img src="/E0B8349B-9FE5-4FCF-A489-3D22E65CFF2C.JPG" alt="Planner Graines de Foi avec bougie" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CONTENU COMPLET ══ -->
+    <section class="section" data-reveal>
       <div class="container">
-        <div v-if="loading" class="loading-state">
-          <div class="skeleton skeleton--img" />
-          <div class="skeleton-text">
-            <div class="skeleton skeleton--line" />
-            <div class="skeleton skeleton--line skeleton--short" />
-            <div class="skeleton skeleton--line" />
-          </div>
-        </div>
-
-        <div v-else-if="error" class="error-state" data-reveal>
-          <p>Impossible de charger le produit. Veuillez réessayer.</p>
-          <button class="btn btn-outline" style="margin-top: 1rem" @click="$router.go(0)">Réessayer</button>
-        </div>
-
-        <div v-else-if="product" class="product-layout" data-reveal>
-          <!-- Image -->
-          <div class="product-img">
-            <div v-if="product.imageUrl" class="product-img__real">
-              <img :src="product.imageUrl" :alt="product.nom">
-            </div>
-            <div v-else class="product-img__placeholder">
-              <svg class="product-deco" viewBox="0 0 160 260" fill="none" aria-hidden="true">
-                <path d="M80 260 L80 0" stroke="currentColor" stroke-width="0.6" opacity="0.35"/>
-                <ellipse cx="43" cy="55" rx="40" ry="14" transform="rotate(-38 43 55)" fill="currentColor" opacity="0.15"/>
-                <ellipse cx="117" cy="110" rx="40" ry="14" transform="rotate(36 117 110)" fill="currentColor" opacity="0.13"/>
-                <ellipse cx="43" cy="170" rx="40" ry="14" transform="rotate(-35 43 170)" fill="currentColor" opacity="0.11"/>
-                <ellipse cx="117" cy="225" rx="40" ry="14" transform="rotate(38 117 225)" fill="currentColor" opacity="0.09"/>
-              </svg>
-              <div class="product-img__label">
-                <span class="product-img__name">mannaeden</span>
-                <span class="product-img__sub">le planner</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Info -->
-          <div class="product-info">
-            <span class="eyebrow">Planner physique · Format A5</span>
-            <h2 class="product-title">{{ product.nom }}</h2>
+        <div class="contents-layout">
+          <div class="contents-text">
+            <span class="eyebrow">Ce qu'il contient</span>
+            <h2 class="section-title">365 jours d'intention spirituelle.</h2>
             <div class="divider" />
-
-            <p class="product-desc">
-              {{ product.description ?? 'Un planner annuel pensé pour accompagner votre vie spirituelle — versets bibliques, plans journaliers, mensuels et annuels, trackers de prière et espaces d\'écriture libres.' }}
-            </p>
-
-            <!-- What's inside -->
-            <ul class="product-includes">
-              <li>✦ Verset guidant chaque semaine de l'année</li>
-              <li>✦ Plans journaliers structurés</li>
-              <li>✦ Trackers mensuels et annuels</li>
-              <li>✦ Espaces de prière et de réflexion</li>
-              <li>✦ Pages d'écriture libre</li>
-              <li>✦ Bilan de fin d'année</li>
+            <ul class="contents-list" data-stagger>
+              <li v-for="item in contents" :key="item">
+                <span class="contents-bullet" aria-hidden="true">✦</span>
+                <span>{{ item }}</span>
+              </li>
             </ul>
-
-            <div class="product-bottom">
-              <div class="product-price-row">
-                <span class="product-price">{{ prix }}</span>
-                <span class="product-stock" :class="stockClass">{{ stockLabel }}</span>
-              </div>
-
-              <button
-                class="btn btn-primary product-cta"
-                :disabled="!product || product.stock === 0"
-                @click="handleOrder"
-              >
-                {{ product.stock === 0 ? 'Rupture de stock' : user ? 'Commander' : 'Commander — créer un compte' }}
-              </button>
-
-              <p v-if="!user" class="product-auth-hint">
-                Un compte est nécessaire pour commander.
-                <NuxtLink to="/inscription">Créer un compte gratuitement →</NuxtLink>
-              </p>
-            </div>
+            <p class="contents-note">
+              Une question ? <NuxtLink to="/contact" class="contents-link">Écrivez-nous.</NuxtLink>
+            </p>
           </div>
-        </div>
-
-        <div v-else class="error-state" data-reveal>
-          <p>Aucun produit disponible pour le moment.</p>
+          <div class="contents-img" data-reveal>
+            <img src="/AE054CF9-9FB6-4FE6-97AB-2DC88E876BAA.PNG" alt="Pages intérieures du planner Graines de Foi" />
+            <div class="contents-img__caption">Pages de méditation quotidienne</div>
+          </div>
         </div>
       </div>
     </section>
@@ -179,8 +238,8 @@ function handleOrder() {
           <div class="garantie">
             <div class="garantie__icon">
               <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                <path d="M4 8l12 8 12-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
                 <rect x="4" y="6" width="24" height="20" rx="2" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M4 8l12 8 12-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
               </svg>
             </div>
             <h4>Livraison soignée</h4>
@@ -193,7 +252,7 @@ function handleOrder() {
               </svg>
             </div>
             <h4>Qualité premium</h4>
-            <p>Papier épais, reliure solide, couverture soignée — fait pour durer toute une année.</p>
+            <p>Papier épais, reliure solide, couverture soignée — conçu pour durer toute une année.</p>
           </div>
           <div class="garantie">
             <div class="garantie__icon">
@@ -203,9 +262,20 @@ function handleOrder() {
               </svg>
             </div>
             <h4>Pensé avec intention</h4>
-            <p>Créé par Camille, chaque page est le fruit de mois de réflexion spirituelle et pratique.</p>
+            <p>Créé par Camille Gicquiaud — chaque page est le fruit de mois de réflexion spirituelle.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ══ CTA FINAL ══ -->
+    <section class="section section--deep cta-final" data-reveal>
+      <div class="container--narrow" style="text-align: center">
+        <p class="verse-text" style="color: rgba(255,255,255,0.5); font-size: 0.9rem; font-style: normal; letter-spacing: 0.1em; text-transform: uppercase">Une seule année. Une vie transformée.</p>
+        <h2 class="cta-title">Prêt·e à commencer ce chemin ?</h2>
+        <button class="btn btn-outline-light cta-btn" @click="handleOrder">
+          Commander Graines de Foi →
+        </button>
       </div>
     </section>
 
@@ -213,151 +283,114 @@ function handleOrder() {
 </template>
 
 <style scoped>
+/* ── HERO ── */
 .shop-hero {
   padding-top: 10rem;
-  padding-bottom: 4rem;
+  padding-bottom: 5rem;
 }
 
-.shop-hero__eyebrow { color: var(--color-gold); }
-
-.shop-hero__title {
-  font-size: clamp(3rem, 6vw, 5rem);
-  font-weight: 600;
-  margin-top: 0.75rem;
-  line-height: 1.07;
-}
-
-.shop-hero__title em {
-  font-style: italic;
-  color: var(--color-muted);
-}
-
-/* LOADING */
-.loading-state {
-  display: grid;
-  grid-template-columns: 5fr 7fr;
-  gap: 5rem;
-}
-
-.skeleton {
-  background: var(--color-bg-alt);
-  border-radius: 8px;
-  animation: shimmer 1.5s ease-in-out infinite;
-}
-
-.skeleton--img {
-  aspect-ratio: 3 / 4;
-}
-
-.skeleton-text {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding-top: 2rem;
-}
-
-.skeleton--line {
-  height: 16px;
-  border-radius: 4px;
-}
-
-.skeleton--short { width: 50%; }
-
-@keyframes shimmer {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-/* PRODUCT */
-.product-layout {
+.shop-layout {
   display: grid;
   grid-template-columns: 5fr 7fr;
   gap: 5rem;
   align-items: start;
 }
 
-.product-img {
+/* ── GALLERY ── */
+.gallery {
   position: sticky;
   top: 100px;
-  aspect-ratio: 3 / 4;
-  border-radius: 14px;
-  overflow: hidden;
 }
 
-.product-img__real img {
+.gallery__main {
+  aspect-ratio: 3 / 4;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+}
+
+.gallery__main img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.product-img__placeholder {
-  width: 100%;
-  height: 100%;
-  background: var(--color-green);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  position: relative;
-}
-
-.product-deco {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  color: rgba(245, 240, 232, 0.9);
-}
-
-.product-img__label {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.product-img__name {
-  font-family: var(--font-serif);
-  font-size: 1.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: rgba(245, 240, 232, 0.82);
-}
-
-.product-img__sub {
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(245, 240, 232, 0.38);
-}
-
-.product-title {
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
+.gallery__thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
   margin-top: 0.75rem;
+}
+
+.gallery__thumb {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  background: none;
+  padding: 0;
+}
+
+.gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery__thumb--active {
+  border-color: var(--color-green);
+}
+
+/* ── PRODUCT INFO ── */
+.shop-eyebrow {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.shop-title {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  margin-top: 0.75rem;
+  color: var(--color-green-deep);
 }
 
 .product-desc {
   font-size: 0.97rem;
   color: var(--color-muted);
-  line-height: 1.75;
+  line-height: 1.78;
 }
 
-.product-includes {
+.product-teaser {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  margin-top: 1.75rem;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--color-bg-alt);
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
 }
 
-.product-includes li {
-  font-size: 0.9rem;
-  color: var(--color-text);
-  display: flex;
-  gap: 0.6rem;
+.product-teaser li {
+  font-size: 0.88rem;
+  color: var(--color-green-mid);
+  padding-left: 1rem;
+  position: relative;
+}
+
+.product-teaser li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  font-size: 0.6rem;
+  top: 0.2em;
+  color: var(--color-green-mid);
 }
 
 .product-bottom {
@@ -375,21 +408,21 @@ function handleOrder() {
 
 .product-price {
   font-family: var(--font-serif);
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--color-green-deep);
 }
 
 .product-stock {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.04em;
   padding: 0.3rem 0.75rem;
   border-radius: 100px;
 }
 
-.stock--ok { background: rgba(61, 92, 61, 0.1); color: var(--color-green); }
-.stock--low { background: rgba(184, 150, 46, 0.12); color: var(--color-gold); }
+.stock--ok { background: rgba(53, 64, 40, 0.1); color: var(--color-green); }
+.stock--low { background: rgba(184, 150, 46, 0.12); color: #8a6f1a; }
 .stock--out { background: rgba(162, 48, 48, 0.1); color: var(--color-danger); }
 
 .product-cta {
@@ -406,17 +439,119 @@ function handleOrder() {
   text-align: center;
 }
 
-.product-auth-hint a {
-  color: var(--color-green);
+.product-auth-hint a { color: var(--color-green); }
+
+/* Skeleton */
+.skeleton {
+  background: var(--color-border);
+  border-radius: 8px;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+.skeleton--price { height: 48px; width: 50%; margin-bottom: 1.5rem; }
+.skeleton--btn { height: 52px; }
+@keyframes shimmer {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
-.error-state {
-  text-align: center;
-  padding-block: 5rem;
+/* ── CAMILLE PHOTOS ── */
+.camille-section {
+  padding-block: 0;
+}
+
+.camille-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 0.5rem;
+  height: 620px;
+}
+
+.camille-img {
+  overflow: hidden;
+}
+
+.camille-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.camille-img:hover img { transform: scale(1.03); }
+
+.camille-right {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+/* ── CONTENTS ── */
+.contents-layout {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 5rem;
+  align-items: start;
+}
+
+.contents-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 2rem;
+}
+
+.contents-list li {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.93rem;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.contents-bullet {
+  flex-shrink: 0;
+  font-size: 0.6rem;
+  color: var(--color-green-mid);
+  margin-top: 0.35em;
+}
+
+.contents-note {
+  margin-top: 2rem;
+  font-size: 0.88rem;
   color: var(--color-muted);
 }
 
-/* GARANTIES */
+.contents-link {
+  color: var(--color-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contents-img {
+  position: sticky;
+  top: 100px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.contents-img img {
+  width: 100%;
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(32, 44, 23, 0.1);
+}
+
+.contents-img__caption {
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+/* ── GARANTIES ── */
 .garanties {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -437,30 +572,75 @@ function handleOrder() {
 .garantie__icon svg { width: 100%; height: 100%; }
 
 .garantie h4 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   margin-bottom: 0.6rem;
+  color: var(--color-green-deep);
 }
 
 .garantie p {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--color-muted);
   line-height: 1.7;
 }
 
+/* ── CTA FINAL ── */
+.cta-final {
+  padding-block: 6rem;
+}
+
+.cta-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 600;
+  color: #fff;
+  margin-top: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.cta-btn {
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+}
+
+/* ── TRANSITIONS ── */
+.fade-img-enter-active,
+.fade-img-leave-active { transition: opacity 0.25s; }
+.fade-img-enter-from,
+.fade-img-leave-to { opacity: 0; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .shop-layout { gap: 3rem; }
+  .contents-layout { grid-template-columns: 1fr 340px; gap: 3rem; }
+}
+
 @media (max-width: 900px) {
-  .loading-state,
-  .product-layout {
+  .shop-layout {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.5rem;
   }
 
-  .product-img {
-    position: static;
-    aspect-ratio: 4 / 3;
-    max-width: 360px;
-    margin-inline: auto;
+  .gallery { position: static; }
+
+  .camille-grid {
+    grid-template-columns: 1fr;
+    height: auto;
   }
+
+  .camille-img--main { height: 420px; }
+  .camille-right { grid-template-columns: 1fr 1fr; grid-template-rows: auto; height: 260px; }
+
+  .contents-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .contents-img { position: static; order: -1; max-width: 360px; margin-inline: auto; }
 
   .garanties { grid-template-columns: 1fr; max-width: 400px; margin-inline: auto; }
+}
+
+@media (max-width: 600px) {
+  .camille-right { grid-template-columns: 1fr; height: auto; }
+  .camille-img--secondary,
+  .camille-img--pages { height: 260px; }
 }
 </style>

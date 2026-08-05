@@ -47,17 +47,7 @@ onUnmounted(() => ctx?.revert())
         </div>
         <div class="planner-hero__img">
           <div class="planner-mock">
-            <svg class="planner-mock__deco" viewBox="0 0 160 260" fill="none" aria-hidden="true">
-              <path d="M80 260 L80 0" stroke="currentColor" stroke-width="0.6" opacity="0.35"/>
-              <ellipse cx="43" cy="55" rx="40" ry="14" transform="rotate(-38 43 55)" fill="currentColor" opacity="0.15"/>
-              <ellipse cx="117" cy="110" rx="40" ry="14" transform="rotate(36 117 110)" fill="currentColor" opacity="0.13"/>
-              <ellipse cx="43" cy="170" rx="40" ry="14" transform="rotate(-35 43 170)" fill="currentColor" opacity="0.11"/>
-              <ellipse cx="117" cy="225" rx="40" ry="14" transform="rotate(38 117 225)" fill="currentColor" opacity="0.09"/>
-            </svg>
-            <div class="planner-mock__text">
-              <span class="planner-mock__name">mannaeden</span>
-              <span class="planner-mock__year">2025</span>
-            </div>
+            <img src="/DSC03471.jpg" alt="Camille Gicquiaud avec le planner Graines de Foi" />
           </div>
         </div>
       </div>
@@ -173,7 +163,7 @@ onUnmounted(() => ctx?.revert())
   align-items: center;
 }
 
-.planner-hero__eyebrow { color: var(--color-gold); }
+.planner-hero__eyebrow { color: rgba(255,255,255,0.5); }
 
 .planner-hero__title {
   font-size: clamp(2.4rem, 4.5vw, 4rem);
@@ -196,48 +186,16 @@ onUnmounted(() => ctx?.revert())
 
 .planner-mock {
   aspect-ratio: 3 / 4;
-  background: var(--color-green);
   border-radius: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
-.planner-mock__deco {
-  position: absolute;
-  inset: 0;
+.planner-mock img {
   width: 100%;
   height: 100%;
-  color: rgba(245, 240, 232, 0.9);
-}
-
-.planner-mock__text {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.planner-mock__name {
-  font-family: var(--font-serif);
-  font-size: 1.8rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: rgba(245, 240, 232, 0.8);
-}
-
-.planner-mock__year {
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  color: rgba(245, 240, 232, 0.35);
-  text-transform: uppercase;
+  object-fit: cover;
+  display: block;
 }
 
 /* FEATURES */
@@ -269,7 +227,7 @@ onUnmounted(() => ctx?.revert())
   font-family: var(--font-serif);
   font-size: 2rem;
   font-weight: 300;
-  color: var(--color-gold);
+  color: var(--color-green-mid);
   margin-bottom: 0.75rem;
   line-height: 1;
 }
