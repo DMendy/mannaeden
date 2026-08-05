@@ -13,14 +13,6 @@ const { fetchAll } = useProduct()
 const product = ref<Product | null>(null)
 const loading = ref(true)
 
-const galleryImages = [
-  { src: '/7FCFADDB-776F-42F0-A48A-CEDCA69D4E22.PNG', alt: 'Couverture Graines de Foi' },
-  { src: '/AE054CF9-9FB6-4FE6-97AB-2DC88E876BAA.PNG', alt: 'Pages intérieures — méditation quotidienne' },
-  { src: '/6A964402-0B8C-429D-8601-BF59AB787AFA.PNG', alt: 'Page Dessin' },
-  { src: '/5CE7F5F9-E94F-4BD1-A942-AA21679C2DBD.PNG', alt: 'Dos du planner — GICQUIAUD Camille' },
-]
-const activeImg = ref(0)
-
 const contents = [
   'Une page de couverture',
   'Une page d\'accueil de présentation',
@@ -111,27 +103,10 @@ function handleOrder() {
     <section class="shop-hero">
       <div class="container shop-layout">
 
-        <!-- Gallery -->
+        <!-- Cover image -->
         <div class="gallery">
           <div class="gallery__main">
-            <Transition name="fade-img" mode="out-in">
-              <img
-                :key="activeImg"
-                :src="galleryImages[activeImg].src"
-                :alt="galleryImages[activeImg].alt"
-              />
-            </Transition>
-          </div>
-          <div class="gallery__thumbs">
-            <button
-              v-for="(img, i) in galleryImages"
-              :key="i"
-              class="gallery__thumb"
-              :class="{ 'gallery__thumb--active': activeImg === i }"
-              @click="activeImg = i"
-            >
-              <img :src="img.src" :alt="img.alt" />
-            </button>
+            <img src="/7FCFADDB-776F-42F0-A48A-CEDCA69D4E22.PNG" alt="Graines de Foi — couverture du planner" />
           </div>
         </div>
 
@@ -315,35 +290,6 @@ function handleOrder() {
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-.gallery__thumbs {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
-  margin-top: 0.75rem;
-}
-
-.gallery__thumb {
-  aspect-ratio: 1;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: border-color 0.2s;
-  background: none;
-  padding: 0;
-}
-
-.gallery__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.gallery__thumb--active {
-  border-color: var(--color-green);
 }
 
 /* ── PRODUCT INFO ── */

@@ -1,12 +1,27 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'full' })
 
+const config = useRuntimeConfig()
 const form = reactive({ nom: '', email: '', message: '' })
 const sent = ref(false)
+const loading = ref(false)
+const error = ref<string | null>(null)
 
-function handleSubmit() {
-  // À brancher sur un service d'email (Resend, Formspree, etc.)
-  sent.value = true
+async function handleSubmit() {
+  error.value = null
+  loading.value = true
+  try {
+    await $fetch('/contact', {
+      baseURL: config.public.apiBase as string,
+      method: 'POST',
+      body: { nom: form.nom, email: form.email, message: form.message },
+    })
+    sent.value = true
+  } catch {
+    error.value = 'Une erreur est survenue. Veuillez réessayer ou nous écrire directement.'
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 
@@ -27,7 +42,7 @@ function handleSubmit() {
       <div class="container--narrow">
         <div v-if="sent" class="sent-state">
           <p class="sent-title">Message envoyé.</p>
-          <p class="sent-sub">Merci de votre message — nous vous répondrons dans les 48h.</p>
+          <p class="sent-sub">Merci pour votre message — Camille vous répondra dans les 48h.</p>
           <p class="sent-verse">
             <em>« Que votre parole soit toujours accompagnée de grâce. »</em>
             <span>Colossiens 4 : 6</span>
@@ -45,9 +60,14 @@ function handleSubmit() {
           </div>
           <div class="field">
             <label class="field-label" for="message">Message</label>
-            <textarea id="message" v-model="form.message" class="field-input field-textarea" rows="6" required />
+            <textarea id="message" v-model="form.message" class="field-input field-textarea" rows="6" required minlength="10" />
           </div>
-          <button type="submit" class="btn btn-primary">Envoyer →</button>
+
+          <p v-if="error" class="form-error">{{ error }}</p>
+
+          <button type="submit" class="btn btn-primary" :disabled="loading">
+            {{ loading ? 'Envoi...' : 'Envoyer →' }}
+          </button>
         </form>
       </div>
     </section>

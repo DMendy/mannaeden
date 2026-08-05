@@ -31,7 +31,7 @@ watch(() => router.currentRoute.value.path, () => {
         </button>
 
         <nav class="nav" :class="{ 'nav--open': menuOpen }">
-          <NuxtLink to="/qui-sommes-nous" @click="menuOpen = false">Qui sommes-nous ?</NuxtLink>
+          <NuxtLink to="/qui-sommes-nous" @click="menuOpen = false">Qui suis-je ?</NuxtLink>
           <NuxtLink to="/boutique" @click="menuOpen = false">Le catalogue</NuxtLink>
           <NuxtLink to="/planner" @click="menuOpen = false">Pour qui ?</NuxtLink>
           <NuxtLink to="/nos-valeurs" @click="menuOpen = false">Nos valeurs</NuxtLink>

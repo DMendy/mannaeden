@@ -97,7 +97,7 @@ watch(() => router.currentRoute.value.path, () => {
         <nav class="overlay-nav">
           <NuxtLink to="/qui-sommes-nous" class="overlay-nav-item" @click="menuOpen = false">
             <span class="overlay-nav-num">01</span>
-            <span class="overlay-nav-label">Qui sommes-nous ?</span>
+            <span class="overlay-nav-label">Qui suis-je ?</span>
           </NuxtLink>
           <NuxtLink to="/boutique" class="overlay-nav-item" @click="menuOpen = false">
             <span class="overlay-nav-num">02</span>

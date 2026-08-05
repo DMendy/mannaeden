@@ -214,31 +214,58 @@ function setupReveals() {
       </div>
     </div>
 
-    <!-- ══ EDITORIAL ══════════════════════════════════ -->
-    <section class="section editorial">
+    <!-- ══ PLANNER PRÉSENTATION ═════════════════════ -->
+    <section class="section planner-section">
       <div class="container">
-        <div class="editorial-grid" data-reveal>
-          <div class="editorial-text">
-            <span class="eyebrow">Le planner physique</span>
-            <h2 class="editorial-title">Un objet fait pour durer toute une année.</h2>
-            <div class="divider" />
-            <p class="editorial-body">
-              Papier épais, reliure solide, couverture soignée — chaque détail est pensé
-              pour que mannaeden devienne le compagnon de votre bureau,
-              de votre table de nuit, de votre sac.
-            </p>
-            <p class="editorial-verse">
-              « Là où est votre trésor,<br>là aussi sera votre cœur. »
-              <span>Matthieu 6 : 21</span>
-            </p>
-            <div class="editorial-actions">
-              <NuxtLink to="/boutique" class="btn btn-primary">Commander</NuxtLink>
-              <NuxtLink to="/planner" class="editorial-link">Tout voir sur le planner →</NuxtLink>
-            </div>
+        <div class="planner-intro" data-reveal>
+          <span class="eyebrow">Graines de Foi · 39,90 €</span>
+          <h2 class="planner-title">Un planner complet,<br><em>pensé pour toute une année.</em></h2>
+          <div class="divider" />
+        </div>
+
+        <div class="planner-grid" data-reveal>
+          <!-- Photo principale — pages ouvertes -->
+          <div class="planner-img-main">
+            <img src="/AE054CF9-9FB6-4FE6-97AB-2DC88E876BAA.PNG" alt="Pages intérieures du planner Graines de Foi — méditation quotidienne" />
           </div>
 
-          <div class="editorial-img">
-            <img src="/IMG_2483.JPG" alt="Feuilles sombres, texture naturelle" />
+          <!-- Contenu complet -->
+          <div class="planner-contents">
+            <p class="planner-contents__intro">Il comprend :</p>
+            <ul class="planner-list">
+              <li>Une page de couverture</li>
+              <li>Une page d'accueil de présentation</li>
+              <li>Une page expliquant comment bien commencer son utilisation</li>
+              <li>Un journal de gratitude</li>
+              <li>Deux pages présentant les thèmes abordés chaque mois</li>
+              <li>Un bilan spirituel hebdomadaire</li>
+              <li>Une page mensuelle dédiée à l'explication du thème du mois</li>
+              <li>Un espace de méditation pour chaque jour de l'année</li>
+              <li>13 témoignages</li>
+              <li>Des défis répartis tout au long de l'année — communion, introspection, créativité, confiance en soi, partage et amour</li>
+              <li>Des pages consacrées à la prière</li>
+              <li>Une « To Do List » des exaucements de prières</li>
+              <li>Un journal de rêves — interprétation et prières associées</li>
+              <li>Une partie « Notes » pour écrire librement</li>
+              <li>Une partie « Dessin » pour exprimer librement ses ressentis</li>
+            </ul>
+            <div class="planner-cta">
+              <NuxtLink to="/boutique" class="btn btn-primary">Commander — 39,90 €</NuxtLink>
+              <NuxtLink to="/contact" class="planner-contact-link">Une question ? Écrivez-nous →</NuxtLink>
+            </div>
+          </div>
+        </div>
+
+        <!-- Photo strip -->
+        <div class="planner-photos" data-reveal>
+          <div class="planner-photo">
+            <img src="/E0B8349B-9FE5-4FCF-A489-3D22E65CFF2C.JPG" alt="Planner Graines de Foi posé avec une bougie" />
+          </div>
+          <div class="planner-photo">
+            <img src="/6A964402-0B8C-429D-8601-BF59AB787AFA.PNG" alt="Page Dessin du planner Graines de Foi" />
+          </div>
+          <div class="planner-photo">
+            <img src="/5CE7F5F9-E94F-4BD1-A942-AA21679C2DBD.PNG" alt="Dos du planner — GICQUIAUD Camille" />
           </div>
         </div>
       </div>
@@ -636,79 +663,117 @@ function setupReveals() {
   text-transform: uppercase;
 }
 
-/* ══ EDITORIAL ══════════════════════════════════════ */
-.editorial { background: var(--color-bg); }
+/* ══ PLANNER SECTION ════════════════════════════════ */
+.planner-section { background: var(--color-bg); }
 
-.editorial-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
-  align-items: center;
-}
+.planner-intro { margin-bottom: 3.5rem; }
 
-.editorial-title {
-  font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+.planner-title {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
   font-weight: 700;
   margin-top: 0.75rem;
   color: var(--color-green-deep);
   line-height: 1.1;
 }
 
-.editorial-body {
-  font-size: 0.97rem;
-  color: var(--color-muted);
-  line-height: 1.8;
-  margin-top: 1rem;
-}
-
-.editorial-verse {
-  font-family: var(--font-serif);
+.planner-title em {
   font-style: italic;
-  font-size: 1rem;
-  color: var(--color-green);
-  line-height: 1.65;
-  margin-top: 1.5rem;
-  padding-left: 1.25rem;
-  border-left: 2px solid var(--color-border);
+  color: var(--color-green-mid);
 }
 
-.editorial-verse span {
+.planner-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 5rem;
+  align-items: start;
+  margin-bottom: 4rem;
+}
+
+.planner-img-main {
+  position: sticky;
+  top: 100px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(32,44,23,0.1);
+}
+
+.planner-img-main img {
+  width: 100%;
   display: block;
-  font-style: normal;
-  font-size: 0.75rem;
-  letter-spacing: 0.07em;
-  color: var(--color-muted);
-  margin-top: 0.5rem;
-  font-family: var(--font-sans);
 }
 
-.editorial-actions {
+.planner-contents__intro {
+  font-size: 0.88rem;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}
+
+.planner-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.planner-list li {
+  font-size: 0.93rem;
+  color: var(--color-text);
+  line-height: 1.5;
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.planner-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  font-size: 0.55rem;
+  top: 0.3em;
+  color: var(--color-green-mid);
+}
+
+.planner-cta {
   display: flex;
   align-items: center;
   gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
   flex-wrap: wrap;
 }
 
-.editorial-link {
+.planner-contact-link {
   font-size: 0.875rem;
   color: var(--color-green);
   font-weight: 500;
 }
+.planner-contact-link:hover { text-decoration: underline; }
 
-.editorial-link:hover { text-decoration: underline; }
-
-.editorial-img {
-  border-radius: 12px;
-  overflow: hidden;
-  aspect-ratio: 4 / 5;
+/* Photo strip */
+.planner-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.editorial-img img {
+.planner-photo {
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+.planner-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
 }
+
+.planner-photo:hover img { transform: scale(1.04); }
 
 /* ══ CTA ════════════════════════════════════════════ */
 .cta-section { min-height: 50vh; display: flex; align-items: center; }
@@ -759,12 +824,14 @@ function setupReveals() {
 
   .hero__photo { order: 2; }
 
-  .editorial-grid {
+  .planner-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
 
-  .editorial-img { aspect-ratio: 16 / 9; }
+  .planner-img-main { position: static; }
+  .planner-photos { grid-template-columns: 1fr 1fr; }
+  .planner-photos .planner-photo:last-child { display: none; }
 }
 
 @media (max-width: 600px) {
