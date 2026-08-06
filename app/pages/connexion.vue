@@ -14,8 +14,11 @@ async function onSubmit() {
   error.value = null
   loading.value = true
   try {
+    const { user } = useAuth()
     await login({ email: email.value, password: password.value })
-    const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/compte'
+    const redirect = typeof route.query.redirect === 'string'
+      ? route.query.redirect
+      : user.value?.role === 'ADMIN' ? '/admin' : '/compte'
     router.push(redirect)
   } catch (err) {
     error.value = err instanceof Error ? err.message : 'Connexion impossible.'
