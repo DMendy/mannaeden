@@ -216,8 +216,8 @@ function formatPrice(cents: number) {
 }
 
 .stock-btn {
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   border: 1px solid var(--color-border);
   border-radius: 8px;
   background: #fff;

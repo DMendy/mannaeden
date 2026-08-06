@@ -217,3 +217,26 @@ img { max-width: 100%; display: block; }
 /* ── Auth pages ── */
 .auth-wrapper { padding-block: 3rem; }
 .auth-page { max-width: 420px; margin: 0 auto; }
+
+/* ── Focus states (accessibilité clavier) ── */
+:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 3px;
+}
+
+/* ── prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html { scroll-behavior: auto; }
+}

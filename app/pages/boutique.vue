@@ -13,6 +13,14 @@ const { fetchAll } = useProduct()
 const product = ref<Product | null>(null)
 const loading = ref(true)
 
+const GALLERY_IMAGES = [
+  { src: '/7FCFADDB-776F-42F0-A48A-CEDCA69D4E22.PNG', alt: 'Graines de Foi — couverture' },
+  { src: '/AE054CF9-9FB6-4FE6-97AB-2DC88E876BAA.PNG', alt: 'Pages intérieures — méditation quotidienne' },
+  { src: '/E0B8349B-9FE5-4FCF-A489-3D22E65CFF2C.JPG', alt: 'Planner Graines de Foi avec bougie' },
+  { src: '/6A964402-0B8C-429D-8601-BF59AB787AFA.PNG', alt: 'Page dessin — expression libre' },
+]
+const activeImage = ref(GALLERY_IMAGES[0])
+
 const contents = [
   'Une page de couverture',
   'Une page d\'accueil de présentation',
@@ -45,7 +53,10 @@ onMounted(async () => {
 
   await nextTick()
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
   ctx = gsap.context(() => {
+    if (!prefersReducedMotion) {
     gsap.timeline({ delay: 0.1 })
       .from('.gallery', { opacity: 0, x: -30, duration: 0.9, ease: 'power3.out' })
       .from('.product-info > *', { opacity: 0, y: 20, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, '-=0.5')
@@ -63,6 +74,7 @@ onMounted(async () => {
         scrollTrigger: { trigger: container, start: 'top 85%' }
       })
     })
+    } // end prefersReducedMotion check
   }, root.value!)
 })
 
@@ -101,10 +113,24 @@ function handleOrder() {
     <section class="shop-hero">
       <div class="container shop-layout">
 
-        <!-- Cover image -->
+        <!-- Gallery -->
         <div class="gallery">
           <div class="gallery__main">
-            <img src="/7FCFADDB-776F-42F0-A48A-CEDCA69D4E22.PNG" alt="Graines de Foi — couverture du planner" />
+            <Transition name="fade-img" mode="out-in">
+              <img :key="activeImage.src" :src="activeImage.src" :alt="activeImage.alt" />
+            </Transition>
+          </div>
+          <div class="gallery__thumbs">
+            <button
+              v-for="img in GALLERY_IMAGES"
+              :key="img.src"
+              class="gallery__thumb"
+              :class="{ 'gallery__thumb--active': img.src === activeImage.src }"
+              :aria-label="img.alt"
+              @click="activeImage = img"
+            >
+              <img :src="img.src" :alt="img.alt" />
+            </button>
           </div>
         </div>
 
@@ -141,7 +167,7 @@ function handleOrder() {
               :disabled="product?.stock === 0"
               @click="handleOrder"
             >
-              {{ product?.stock === 0 ? 'Indisponible' : user ? 'Commander →' : 'Commander — créer un compte' }}
+              {{ product?.stock === 0 ? 'Indisponible' : 'Commander →' }}
             </button>
 
             <p v-if="!user" class="product-auth-hint">
@@ -241,6 +267,42 @@ function handleOrder() {
       </div>
     </section>
 
+    <!-- ══ FAQ / LIVRAISON ══ -->
+    <section class="section section--alt" data-reveal>
+      <div class="container--narrow">
+        <span class="eyebrow" style="text-align:center;display:block">Questions fréquentes</span>
+        <h2 class="section-title" style="text-align:center;margin-top:0.75rem">Tout ce que vous voulez savoir</h2>
+        <div class="divider divider--center" />
+
+        <div class="faq-list" data-stagger>
+          <details class="faq-item">
+            <summary class="faq-question">Quand vais-je recevoir mon planner ?</summary>
+            <p class="faq-answer">Les commandes sont expédiées sous 2 à 4 jours ouvrés. Une fois expédié, comptez 3 à 5 jours de livraison en France métropolitaine.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Livrez-vous en dehors de la France ?</summary>
+            <p class="faq-answer">Oui — nous livrons en France métropolitaine, en DOM-TOM, en Belgique et en Suisse. Pour toute autre destination, contactez-nous.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Le planner est-il adapté aux débutants ?</summary>
+            <p class="faq-answer">Absolument. Graines de Foi a été conçu pour être accessible à toute personne souhaitant approfondir sa vie spirituelle, quelle que soit son expérience.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Puis-je offrir ce planner ?</summary>
+            <p class="faq-answer">Oui. Lors de votre commande, renseignez l'adresse de livraison de la personne à qui vous l'offrez. Nous préparons les planners avec soin, parfaits à offrir.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-question">Une autre question ?</summary>
+            <p class="faq-answer">Écrivez-nous via la <NuxtLink to="/contact" class="faq-link">page contact</NuxtLink> — nous répondons sous 24 h.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <!-- ══ CTA FINAL ══ -->
     <section class="section section--deep cta-final" data-reveal>
       <div class="container--narrow" style="text-align: center">
@@ -273,6 +335,9 @@ function handleOrder() {
 .gallery {
   position: sticky;
   top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .gallery__main {
@@ -289,6 +354,33 @@ function handleOrder() {
   object-fit: cover;
   display: block;
 }
+
+.gallery__thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.gallery__thumb {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid var(--color-border);
+  background: var(--color-bg-alt);
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.18s;
+}
+
+.gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery__thumb:hover { border-color: var(--color-green-mid); }
+.gallery__thumb--active { border-color: var(--color-green); }
 
 /* ── PRODUCT INFO ── */
 .shop-eyebrow {
@@ -527,6 +619,61 @@ function handleOrder() {
   line-height: 1.7;
 }
 
+/* ── FAQ ── */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.faq-item {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.faq-question {
+  padding: 1.1rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-green-deep);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: background 0.15s;
+}
+
+.faq-question::-webkit-details-marker { display: none; }
+
+.faq-question::after {
+  content: '+';
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: var(--color-green-mid);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.faq-item[open] .faq-question { background: var(--color-bg-alt); }
+.faq-item[open] .faq-question::after { transform: rotate(45deg); }
+
+.faq-answer {
+  padding: 0 1.25rem 1.1rem;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  line-height: 1.7;
+}
+
+.faq-link {
+  color: var(--color-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* ── CTA FINAL ── */
 .cta-final {
   padding-block: 6rem;
@@ -564,6 +711,7 @@ function handleOrder() {
   }
 
   .gallery { position: static; }
+  .gallery__thumbs { grid-template-columns: repeat(4, 1fr); }
 
   .camille-grid {
     grid-template-columns: 1fr;
