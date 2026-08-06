@@ -47,10 +47,8 @@ onMounted(async () => {
 
   ctx = gsap.context(() => {
     gsap.timeline({ delay: 0.1 })
-      .from('.shop-eyebrow', { opacity: 0, y: 10, duration: 0.5 })
-      .from('.shop-title', { opacity: 0, y: 45, duration: 1, ease: 'power4.out' }, '-=0.2')
-      .from('.gallery', { opacity: 0, x: -30, duration: 0.9, ease: 'power3.out' }, '-=0.6')
-      .from('.product-info > *', { opacity: 0, y: 20, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, '-=0.4')
+      .from('.gallery', { opacity: 0, x: -30, duration: 0.9, ease: 'power3.out' })
+      .from('.product-info > *', { opacity: 0, y: 20, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, '-=0.5')
 
     gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(el => {
       gsap.from(el, {
