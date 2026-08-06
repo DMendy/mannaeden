@@ -1,9 +1,41 @@
 <script setup lang="ts">
-import type { Civilite } from '~/types/auth'
+import type { Civilite, Order, StatutLivraison } from '~/types/auth'
 
 definePageMeta({ middleware: 'auth' })
 
-const { user, updateMe } = useAuth()
+const { user, updateMe, api } = useAuth()
+
+const orders = ref<Order[]>([])
+const ordersLoading = ref(true)
+
+const STATUTS: { value: StatutLivraison; label: string }[] = [
+  { value: 'COMMANDEE',             label: 'Commandée' },
+  { value: 'EXPEDIEE',              label: 'Expédiée' },
+  { value: 'EN_COURS_DE_LIVRAISON', label: 'En livraison' },
+  { value: 'LIVREE',                label: 'Livrée' },
+]
+
+function statutIndex(statut: StatutLivraison) {
+  return STATUTS.findIndex(s => s.value === statut)
+}
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })
+}
+
+function formatPrice(cents: number) {
+  return (cents / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
+}
+
+onMounted(async () => {
+  try {
+    orders.value = await api<Order[]>('/orders')
+  } catch {
+    // silently fail
+  } finally {
+    ordersLoading.value = false
+  }
+})
 
 const editing = ref(false)
 const saving = ref(false)
@@ -139,14 +171,14 @@ async function saveProfile() {
               <input id="ligne2" v-model="adresseLigne2" type="text" class="field-input" autocomplete="address-line2" />
             </div>
 
-            <div class="field-row field-row--2">
-              <div class="field">
-                <label class="field-label" for="cp">Code postal</label>
-                <input id="cp" v-model="codePostal" type="text" class="field-input" autocomplete="postal-code" />
-              </div>
+            <div class="field-row field-row--ville-cp">
               <div class="field">
                 <label class="field-label" for="ville">Ville</label>
                 <input id="ville" v-model="ville" type="text" class="field-input" autocomplete="address-level2" />
+              </div>
+              <div class="field field--cp">
+                <label class="field-label" for="cp">Code postal</label>
+                <input id="cp" v-model="codePostal" type="text" class="field-input" autocomplete="postal-code" />
               </div>
             </div>
 
@@ -164,6 +196,65 @@ async function saveProfile() {
               </button>
             </div>
           </form>
+        </div>
+      </div>
+
+      <!-- Mes commandes -->
+      <div class="account-card orders-card">
+        <div class="card-section">
+          <h2 class="card-section__title">Mes commandes</h2>
+
+          <div v-if="ordersLoading" class="orders-loading">
+            <div class="skeleton-row" />
+            <div class="skeleton-row" />
+          </div>
+
+          <div v-else-if="orders.length === 0" class="orders-empty">
+            <p>Aucune commande pour le moment.</p>
+            <NuxtLink to="/boutique" class="orders-empty-link">Découvrir le planner →</NuxtLink>
+          </div>
+
+          <div v-else class="orders-list">
+            <div v-for="order in orders" :key="order.id" class="order-item">
+              <div class="order-meta">
+                <span class="order-ref">#{{ order.id.slice(0, 8).toUpperCase() }}</span>
+                <span class="order-date">{{ formatDate(order.createdAt) }}</span>
+              </div>
+
+              <div class="order-detail">
+                <span class="order-product">{{ order.product?.nom }} × {{ order.quantite }}</span>
+                <span class="order-price">{{ formatPrice(order.montantTotal) }}</span>
+              </div>
+
+              <!-- Progress -->
+              <div class="order-track">
+                <div class="track-bar">
+                  <div
+                    class="track-fill"
+                    :style="{ width: `${(statutIndex(order.statutLivraison) / (STATUTS.length - 1)) * 100}%` }"
+                  />
+                </div>
+                <div class="track-steps">
+                  <div
+                    v-for="(s, i) in STATUTS"
+                    :key="s.value"
+                    class="track-step"
+                    :class="{
+                      'track-step--done': i < statutIndex(order.statutLivraison),
+                      'track-step--active': i === statutIndex(order.statutLivraison),
+                    }"
+                  >
+                    <div class="track-dot">
+                      <svg v-if="i < statutIndex(order.statutLivraison)" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                    <span class="track-label">{{ s.label }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -302,6 +393,7 @@ async function saveProfile() {
   gap: 0.75rem;
 }
 .field-row--2 { grid-template-columns: 1fr 1fr; }
+.field-row--ville-cp { grid-template-columns: 1fr 120px; }
 .field--civil { max-width: 120px; }
 
 .edit-actions {
@@ -338,6 +430,172 @@ async function saveProfile() {
   text-underline-offset: 3px;
 }
 .link-subtle:hover { color: var(--color-text); }
+
+/* ── COMMANDES ── */
+.orders-card {
+  margin-top: 1.25rem;
+}
+
+.orders-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.skeleton-row {
+  height: 110px;
+  border-radius: 10px;
+  background: var(--color-border);
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.orders-empty {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.orders-empty-link {
+  color: var(--color-green);
+  font-size: 0.85rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.order-item {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.order-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.order-ref {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-green-deep);
+}
+
+.order-date {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.order-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.order-product {
+  font-size: 0.88rem;
+  color: var(--color-text);
+}
+
+.order-price {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-green-deep);
+}
+
+/* Track */
+.order-track {
+  margin-top: 0.25rem;
+}
+
+.track-bar {
+  position: relative;
+  height: 3px;
+  background: var(--color-border);
+  border-radius: 100px;
+  margin-bottom: 0.75rem;
+}
+
+.track-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: var(--color-green);
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+
+.track-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.25rem;
+}
+
+.track-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.track-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.track-dot svg { width: 11px; height: 11px; }
+
+.track-step--done .track-dot {
+  background: var(--color-green);
+  border-color: var(--color-green);
+  color: #fff;
+}
+
+.track-step--active .track-dot {
+  border-color: var(--color-green);
+  background: rgba(53,64,40,0.08);
+}
+
+.track-label {
+  font-size: 0.65rem;
+  color: var(--color-muted);
+  text-align: center;
+  line-height: 1.3;
+}
+
+.track-step--active .track-label {
+  color: var(--color-green);
+  font-weight: 600;
+}
+
+.track-step--done .track-label {
+  color: var(--color-green-mid);
+}
 
 /* Toast */
 .toast {

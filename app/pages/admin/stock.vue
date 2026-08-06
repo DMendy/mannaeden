@@ -97,7 +97,7 @@ function formatPrice(cents: number) {
             'stock-status--low': product.stock > 0 && product.stock <= 5,
             'stock-status--ok': product.stock > 5,
           }">
-            {{ product.stock === 0 ? 'Rupture de stock' : product.stock <= 5 ? `${product.stock} restant${product.stock > 1 ? 's' : ''}` : 'En stock' }}
+            {{ product.stock === 0 ? 'Indisponible — en attente de stock' : product.stock <= 5 ? `${product.stock} restant${product.stock > 1 ? 's' : ''}` : 'En stock' }}
           </div>
 
           <button

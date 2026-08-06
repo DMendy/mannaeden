@@ -77,7 +77,7 @@ const prix = computed(() => {
 
 const stockLabel = computed(() => {
   if (!product.value) return 'En stock'
-  if (product.value.stock === 0) return 'Rupture de stock'
+  if (product.value.stock === 0) return 'Indisponible — en attente de stock'
   if (product.value.stock <= 5) return `Plus que ${product.value.stock} exemplaire${product.value.stock > 1 ? 's' : ''}`
   return 'En stock'
 })
@@ -143,7 +143,7 @@ function handleOrder() {
               :disabled="product?.stock === 0"
               @click="handleOrder"
             >
-              {{ product?.stock === 0 ? 'Rupture de stock' : user ? 'Commander →' : 'Commander — créer un compte' }}
+              {{ product?.stock === 0 ? 'Indisponible' : user ? 'Commander →' : 'Commander — créer un compte' }}
             </button>
 
             <p v-if="!user" class="product-auth-hint">
