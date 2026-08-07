@@ -29,7 +29,7 @@ function formatPrice(cents: number) {
 
 onMounted(async () => {
   try {
-    orders.value = await api<Order[]>('/orders')
+    orders.value = await api<Order[]>('/orders/me')
   } catch {
     // silently fail
   } finally {

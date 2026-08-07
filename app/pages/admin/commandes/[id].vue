@@ -10,6 +10,7 @@ const order = ref<Order | null>(null)
 const loading = ref(true)
 const updating = ref(false)
 const success = ref(false)
+const updateError = ref<string | null>(null)
 
 async function fetchOrder() {
   loading.value = true
@@ -37,11 +38,14 @@ const statutIndex = computed(() => {
 async function setStatut(statut: StatutLivraison) {
   if (!order.value || order.value.statutLivraison === statut) return
   updating.value = true
+  updateError.value = null
   try {
     await api(`/orders/${order.value.id}/status`, { method: 'PATCH', body: { statut } })
     order.value = { ...order.value, statutLivraison: statut }
     success.value = true
     setTimeout(() => (success.value = false), 3000)
+  } catch (err) {
+    updateError.value = err instanceof Error ? err.message : 'Erreur lors de la mise à jour.'
   } finally {
     updating.value = false
   }
@@ -137,6 +141,8 @@ function formatPrice(cents: number) {
             <span class="step-desc">{{ s.desc }}</span>
           </button>
         </div>
+
+        <p v-if="updateError" class="statut-error">{{ updateError }}</p>
 
         <p class="statut-hint">
           Cliquez sur un statut pour le mettre à jour. Le client reçoit un email automatiquement.
@@ -330,8 +336,16 @@ function formatPrice(cents: number) {
   line-height: 1.4;
 }
 
+.statut-error {
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: var(--color-danger);
+  text-align: center;
+  font-weight: 500;
+}
+
 .statut-hint {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   font-size: 0.78rem;
   color: var(--color-muted);
   text-align: center;

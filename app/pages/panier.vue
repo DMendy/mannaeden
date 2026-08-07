@@ -134,14 +134,14 @@ async function onSubmit() {
                 <input v-model="adresseLigne2" type="text" class="field-input" autocomplete="address-line2">
               </label>
 
-              <div class="field-row">
-                <label class="field">
-                  <span class="field-label">Code postal *</span>
-                  <input v-model="codePostal" type="text" class="field-input" required autocomplete="postal-code">
-                </label>
+              <div class="field-row field-row--ville-cp">
                 <label class="field">
                   <span class="field-label">Ville *</span>
                   <input v-model="ville" type="text" class="field-input" required autocomplete="address-level2">
+                </label>
+                <label class="field">
+                  <span class="field-label">Code postal *</span>
+                  <input v-model="codePostal" type="text" class="field-input" required autocomplete="postal-code">
                 </label>
               </div>
 
@@ -311,6 +311,10 @@ async function onSubmit() {
 
 .field-row .field:first-child {
   min-width: 90px;
+}
+
+.field-row--ville-cp {
+  grid-template-columns: 1fr 120px;
 }
 
 .form-section__divider {
