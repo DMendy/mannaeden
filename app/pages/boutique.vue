@@ -223,10 +223,10 @@ function handleOrder() {
     </section>
 
     <!-- ══ VERSE ══ -->
-    <section class="section section--alt" style="text-align: center">
+    <section class="section section--deep" style="text-align: center">
       <div class="container--narrow" data-reveal>
-        <p class="verse-text">« Cherchez premièrement le royaume et la justice de Dieu, et toutes ces choses vous seront données par-dessus. »</p>
-        <p class="verse-ref">Matthieu 6 : 33</p>
+        <p class="verse-text">« Ta parole est une lampe à mes pieds, et une lumière sur mon sentier. »</p>
+        <p class="verse-ref" style="color: rgba(255,255,255,0.4)">Psaumes 119 : 105</p>
       </div>
     </section>
 
@@ -263,42 +263,6 @@ function handleOrder() {
             <h4>Pensé avec intention</h4>
             <p>Créé par Camille Gicquiaud — chaque page est le fruit de mois de réflexion spirituelle.</p>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══ FAQ / LIVRAISON ══ -->
-    <section class="section section--alt" data-reveal>
-      <div class="container--narrow">
-        <span class="eyebrow" style="text-align:center;display:block">Questions fréquentes</span>
-        <h2 class="section-title" style="text-align:center;margin-top:0.75rem">Tout ce que vous voulez savoir</h2>
-        <div class="divider divider--center" />
-
-        <div class="faq-list" data-stagger>
-          <details class="faq-item">
-            <summary class="faq-question">Quand vais-je recevoir mon planner ?</summary>
-            <p class="faq-answer">Les commandes sont expédiées sous 2 à 4 jours ouvrés. Une fois expédié, comptez 3 à 5 jours de livraison en France métropolitaine.</p>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-question">Livrez-vous en dehors de la France ?</summary>
-            <p class="faq-answer">Oui — nous livrons en France métropolitaine, en DOM-TOM, en Belgique et en Suisse. Pour toute autre destination, contactez-nous.</p>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-question">Le planner est-il adapté aux débutants ?</summary>
-            <p class="faq-answer">Absolument. Graines de Foi a été conçu pour être accessible à toute personne souhaitant approfondir sa vie spirituelle, quelle que soit son expérience.</p>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-question">Puis-je offrir ce planner ?</summary>
-            <p class="faq-answer">Oui. Lors de votre commande, renseignez l'adresse de livraison de la personne à qui vous l'offrez. Nous préparons les planners avec soin, parfaits à offrir.</p>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-question">Une autre question ?</summary>
-            <p class="faq-answer">Écrivez-nous via la <NuxtLink to="/contact" class="faq-link">page contact</NuxtLink> — nous répondons sous 24 h.</p>
-          </details>
         </div>
       </div>
     </section>
@@ -617,61 +581,6 @@ function handleOrder() {
   font-size: 0.88rem;
   color: var(--color-muted);
   line-height: 1.7;
-}
-
-/* ── FAQ ── */
-.faq-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.faq-item {
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  background: #fff;
-  overflow: hidden;
-}
-
-.faq-question {
-  padding: 1.1rem 1.25rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--color-green-deep);
-  cursor: pointer;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  transition: background 0.15s;
-}
-
-.faq-question::-webkit-details-marker { display: none; }
-
-.faq-question::after {
-  content: '+';
-  font-size: 1.2rem;
-  font-weight: 300;
-  color: var(--color-green-mid);
-  flex-shrink: 0;
-  transition: transform 0.2s;
-}
-
-.faq-item[open] .faq-question { background: var(--color-bg-alt); }
-.faq-item[open] .faq-question::after { transform: rotate(45deg); }
-
-.faq-answer {
-  padding: 0 1.25rem 1.1rem;
-  font-size: 0.9rem;
-  color: var(--color-muted);
-  line-height: 1.7;
-}
-
-.faq-link {
-  color: var(--color-green);
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 /* ── CTA FINAL ── */
