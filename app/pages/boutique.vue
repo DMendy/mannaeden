@@ -16,8 +16,6 @@ const loading = ref(true)
 const GALLERY_IMAGES = [
   { src: '/7FCFADDB-776F-42F0-A48A-CEDCA69D4E22.PNG', alt: 'Graines de Foi — couverture' },
   { src: '/AE054CF9-9FB6-4FE6-97AB-2DC88E876BAA.PNG', alt: 'Pages intérieures — méditation quotidienne' },
-  { src: '/E0B8349B-9FE5-4FCF-A489-3D22E65CFF2C.JPG', alt: 'Planner Graines de Foi avec bougie' },
-  { src: '/6A964402-0B8C-429D-8601-BF59AB787AFA.PNG', alt: 'Page dessin — expression libre' },
 ]
 const activeImage = ref(GALLERY_IMAGES[0])
 
@@ -179,21 +177,9 @@ function handleOrder() {
       </div>
     </section>
 
-    <!-- ══ PHOTOS CAMILLE ══ -->
-    <section class="camille-section">
-      <div class="camille-grid">
-        <div class="camille-img camille-img--main">
-          <img src="/DSC03471.jpg" alt="Camille Gicquiaud lisant le planner Graines de Foi" />
-        </div>
-        <div class="camille-right">
-          <div class="camille-img camille-img--secondary">
-            <img src="/DSC03983.jpg" alt="Camille Gicquiaud, fondatrice de mannaeden" />
-          </div>
-          <div class="camille-img camille-img--pages">
-            <img src="/E0B8349B-9FE5-4FCF-A489-3D22E65CFF2C.JPG" alt="Planner Graines de Foi avec bougie" />
-          </div>
-        </div>
-      </div>
+    <!-- ══ LIFESTYLE BANNER ══ -->
+    <section class="lifestyle-banner">
+      <img src="/E0B8349B-9FE5-4FCF-A489-3D22E65CFF2C.JPG" alt="Planner Graines de Foi avec bougie" />
     </section>
 
     <!-- ══ CONTENU COMPLET ══ -->
@@ -454,36 +440,18 @@ function handleOrder() {
   50% { opacity: 1; }
 }
 
-/* ── CAMILLE PHOTOS ── */
-.camille-section {
-  padding-block: 0;
-}
-
-.camille-grid {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  gap: 0.5rem;
-  height: 620px;
-}
-
-.camille-img {
+/* ── LIFESTYLE BANNER ── */
+.lifestyle-banner {
+  height: 520px;
   overflow: hidden;
 }
 
-.camille-img img {
+.lifestyle-banner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 40%;
   display: block;
-  transition: transform 0.6s ease;
-}
-
-.camille-img:hover img { transform: scale(1.03); }
-
-.camille-right {
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 0.5rem;
 }
 
 /* ── CONTENTS ── */
@@ -620,28 +588,15 @@ function handleOrder() {
   }
 
   .gallery { position: static; }
-  .gallery__thumbs { grid-template-columns: repeat(4, 1fr); }
 
-  .camille-grid {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
+  .lifestyle-banner { height: 320px; }
 
-  .camille-img--main { height: 420px; }
-  .camille-right { grid-template-columns: 1fr 1fr; grid-template-rows: auto; height: 260px; }
-
-  .contents-layout {
-    grid-template-columns: 1fr;
-  }
-
+  .contents-layout { grid-template-columns: 1fr; }
   .contents-img { position: static; order: -1; max-width: 360px; margin-inline: auto; }
-
   .garanties { grid-template-columns: 1fr; max-width: 400px; margin-inline: auto; }
 }
 
 @media (max-width: 600px) {
-  .camille-right { grid-template-columns: 1fr; height: auto; }
-  .camille-img--secondary,
-  .camille-img--pages { height: 260px; }
+  .lifestyle-banner { height: 240px; }
 }
 </style>
