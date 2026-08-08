@@ -7,10 +7,20 @@ const { user } = useAuth()
 const { fetchAll } = useProduct()
 const { createSession } = useCheckout()
 
+const SHIPPING_OPTIONS = [
+  { id: 'relais-classique',  label: 'Point relais — Classique', delay: '3–5 jours ouvrés',  price: 599  },
+  { id: 'relais-rapide',     label: 'Point relais — Rapide',    delay: '1–2 jours ouvrés',  price: 799  },
+  { id: 'domicile-classique',label: 'À domicile — Classique',   delay: '3–5 jours ouvrés',  price: 949  },
+  { id: 'domicile-rapide',   label: 'À domicile — Rapide',      delay: '1–2 jours ouvrés',  price: 1249 },
+]
+
 const product = ref<Product | null>(null)
 const loadingProduct = ref(true)
 const submitting = ref(false)
 const error = ref<string | null>(null)
+
+// Livraison sélectionnée (défaut : point relais classique)
+const selectedShipping = ref(SHIPPING_OPTIONS[0])
 
 // Form — pre-filled from user profile
 const civilite = ref<Civilite>(user.value?.civilite ?? 'M')
@@ -32,10 +42,12 @@ onMounted(async () => {
   }
 })
 
-const prix = computed(() => {
-  if (!product.value) return ''
-  return (product.value.prixUnitaire / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
-})
+function formatPrice(cents: number) {
+  return (cents / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
+}
+
+const prixProduit = computed(() => product.value?.prixUnitaire ?? 0)
+const prixTotal = computed(() => prixProduit.value + selectedShipping.value.price)
 
 async function onSubmit() {
   if (!product.value) return
@@ -53,7 +65,9 @@ async function onSubmit() {
       adresseLigne2: adresseLigne2.value || undefined,
       codePostal: codePostal.value,
       ville: ville.value,
-      pays: pays.value
+      pays: pays.value,
+      modeLivraison: selectedShipping.value.label,
+      fraisLivraison: selectedShipping.value.price,
     })
     window.location.href = url
   } catch (err) {
@@ -150,6 +164,33 @@ async function onSubmit() {
                 <input v-model="pays" type="text" class="field-input" required autocomplete="country-name">
               </label>
 
+              <!-- LIVRAISON -->
+              <div class="form-section__divider shipping-divider">
+                <span class="eyebrow" style="color: var(--color-green-mid)">Mode de livraison</span>
+              </div>
+
+              <div class="shipping-options" role="radiogroup" aria-label="Mode de livraison">
+                <label
+                  v-for="option in SHIPPING_OPTIONS"
+                  :key="option.id"
+                  class="shipping-option"
+                  :class="{ 'shipping-option--selected': selectedShipping.id === option.id }"
+                >
+                  <input
+                    v-model="selectedShipping"
+                    type="radio"
+                    :value="option"
+                    class="shipping-radio"
+                    name="livraison"
+                  >
+                  <span class="shipping-option__content">
+                    <span class="shipping-option__label">{{ option.label }}</span>
+                    <span class="shipping-option__delay">{{ option.delay }}</span>
+                  </span>
+                  <span class="shipping-option__price">{{ formatPrice(option.price) }}</span>
+                </label>
+              </div>
+
               <p v-if="error" class="form-error">{{ error }}</p>
 
               <button type="submit" class="btn btn-primary panier-submit" :disabled="submitting || loadingProduct || !product">
@@ -191,9 +232,20 @@ async function onSubmit() {
               </div>
             </div>
 
+            <div class="recap-breakdown">
+              <div class="recap-line">
+                <span>Planner mannaeden</span>
+                <span>{{ formatPrice(prixProduit) }}</span>
+              </div>
+              <div class="recap-line">
+                <span>{{ selectedShipping.label }}</span>
+                <span>{{ formatPrice(selectedShipping.price) }}</span>
+              </div>
+            </div>
+
             <div class="recap-total">
               <span class="recap-total__label">Total</span>
-              <span class="recap-total__price">{{ prix }}</span>
+              <span class="recap-total__price">{{ formatPrice(prixTotal) }}</span>
             </div>
 
             <div class="recap-verse">
@@ -429,6 +481,84 @@ async function onSubmit() {
 .recap-verse {
   padding-top: 1.25rem;
   border-top: 1px solid var(--color-border);
+}
+
+/* SHIPPING OPTIONS */
+.shipping-divider {
+  margin-top: 0.5rem;
+}
+
+.shipping-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.shipping-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s;
+}
+
+.shipping-option:hover {
+  border-color: var(--color-green-mid);
+  background: rgba(53, 64, 40, 0.03);
+}
+
+.shipping-option--selected {
+  border-color: var(--color-green);
+  background: rgba(53, 64, 40, 0.06);
+}
+
+.shipping-radio {
+  accent-color: var(--color-green);
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.shipping-option__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.shipping-option__label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.shipping-option__delay {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+
+.shipping-option__price {
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* RECAP BREAKDOWN */
+.recap-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.recap-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--color-muted);
 }
 
 .recap-loading .skeleton {

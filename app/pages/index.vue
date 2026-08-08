@@ -104,8 +104,8 @@ function setupReveals() {
         </p>
 
         <div class="hero__actions">
-          <NuxtLink to="/boutique" class="btn btn-primary">Commander</NuxtLink>
-          <NuxtLink to="/planner" class="hero__link">Découvrir le planner →</NuxtLink>
+          <NuxtLink to="/panier" class="btn btn-primary">Commander</NuxtLink>
+          <NuxtLink to="/boutique" class="hero__link">Découvrir le planner →</NuxtLink>
         </div>
       </div>
 
@@ -190,7 +190,7 @@ function setupReveals() {
               Pas de jargon, pas de performance spirituelle.
               Juste de l'espace pour grandir, un jour à la fois.
             </p>
-            <NuxtLink to="/boutique" class="btn btn-primary page-cta p-item">
+            <NuxtLink to="/panier" class="btn btn-primary page-cta p-item">
               Commander →
             </NuxtLink>
           </div>
@@ -250,7 +250,7 @@ function setupReveals() {
               <li>Une partie « Dessin » pour exprimer librement ses ressentis</li>
             </ul>
             <div class="planner-cta">
-              <NuxtLink to="/boutique" class="btn btn-primary">Commander — 39,90 €</NuxtLink>
+              <NuxtLink to="/panier" class="btn btn-primary">Commander — 39,90 €</NuxtLink>
               <NuxtLink to="/contact" class="planner-contact-link">Une question ? Écrivez-nous →</NuxtLink>
             </div>
           </div>
@@ -280,7 +280,7 @@ function setupReveals() {
           « Je suis venu afin que vous ayez la vie, et que vous l'ayez en abondance. »
           <span>Jean 10 : 10</span>
         </p>
-        <NuxtLink to="/boutique" class="btn btn-outline-light">Commander mannaeden</NuxtLink>
+        <NuxtLink to="/panier" class="btn btn-outline-light">Commander mannaeden</NuxtLink>
       </div>
     </section>
 

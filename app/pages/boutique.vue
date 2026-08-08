@@ -86,13 +86,15 @@ const prix = computed(() => {
 const stockLabel = computed(() => {
   if (!product.value) return 'En stock'
   if (product.value.stock === 0) return 'Indisponible — en attente de stock'
-  if (product.value.stock <= 5) return `Plus que ${product.value.stock} exemplaire${product.value.stock > 1 ? 's' : ''}`
+  if (product.value.stock <= 3) return `Plus que ${product.value.stock} en stock`
   return 'En stock'
 })
 
 const stockClass = computed(() => {
-  if (!product.value || product.value.stock > 0) return 'stock--ok'
-  return 'stock--out'
+  if (!product.value) return 'stock--ok'
+  if (product.value.stock === 0) return 'stock--out'
+  if (product.value.stock <= 3) return 'stock--low'
+  return 'stock--ok'
 })
 
 function handleOrder() {

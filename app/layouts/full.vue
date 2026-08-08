@@ -74,6 +74,23 @@ watch(() => router.currentRoute.value.path, () => {
       <div class="container site-header__inner">
         <NuxtLink to="/" class="brand" @click="menuOpen = false">mannaeden</NuxtLink>
 
+        <!-- Nav desktop -->
+        <nav class="desktop-nav">
+          <NuxtLink to="/qui-sommes-nous">Qui suis-je ?</NuxtLink>
+          <NuxtLink to="/boutique">Graines de Foi</NuxtLink>
+          <NuxtLink to="/contact">Contact</NuxtLink>
+          <span class="nav-sep" />
+          <template v-if="user">
+            <NuxtLink to="/compte">{{ user.prenom }}</NuxtLink>
+            <button class="link-btn" @click="handleLogout">Déconnexion</button>
+          </template>
+          <template v-else>
+            <NuxtLink to="/connexion">Connexion</NuxtLink>
+            <NuxtLink to="/inscription" class="btn btn-primary btn--nav">Commencer</NuxtLink>
+          </template>
+        </nav>
+
+        <!-- Burger mobile -->
         <button
           class="hamburger"
           :class="{ 'hamburger--open': menuOpen }"
@@ -101,7 +118,7 @@ watch(() => router.currentRoute.value.path, () => {
           </NuxtLink>
           <NuxtLink to="/boutique" class="overlay-nav-item" @click="menuOpen = false">
             <span class="overlay-nav-num">02</span>
-            <span class="overlay-nav-label">Le catalogue</span>
+            <span class="overlay-nav-label">Graines de Foi</span>
           </NuxtLink>
           <NuxtLink to="/planner" class="overlay-nav-item" @click="menuOpen = false">
             <span class="overlay-nav-num">03</span>
@@ -188,11 +205,52 @@ watch(() => router.currentRoute.value.path, () => {
 
 .site-header--open .brand { color: rgba(255,255,255,0.75); }
 
-/* ── Hamburger ── */
+/* ── Nav desktop ── */
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.desktop-nav a {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  transition: color 0.2s;
+}
+
+.desktop-nav a:hover,
+.desktop-nav a.router-link-active {
+  color: var(--color-text);
+}
+
+.nav-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--color-border);
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.2s;
+}
+
+.link-btn:hover { color: var(--color-danger); }
+
+.btn--nav {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.82rem;
+}
+
+/* ── Hamburger (mobile only) ── */
 .hamburger {
   position: relative;
   z-index: 201;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   gap: 7px;
@@ -353,5 +411,10 @@ watch(() => router.currentRoute.value.path, () => {
   letter-spacing: 0.07em;
   margin-top: 0.25rem;
   color: rgba(255,255,255,0.1);
+}
+
+@media (max-width: 768px) {
+  .desktop-nav { display: none; }
+  .hamburger { display: flex; }
 }
 </style>

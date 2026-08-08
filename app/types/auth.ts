@@ -107,4 +107,6 @@ export interface CheckoutPayload {
   codePostal: string
   ville: string
   pays: string
+  modeLivraison: string
+  fraisLivraison: number
 }

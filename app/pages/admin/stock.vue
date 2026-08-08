@@ -94,10 +94,10 @@ function formatPrice(cents: number) {
 
           <div class="stock-status" :class="{
             'stock-status--out': product.stock === 0,
-            'stock-status--low': product.stock > 0 && product.stock <= 5,
-            'stock-status--ok': product.stock > 5,
+            'stock-status--low': product.stock > 0 && product.stock <= 3,
+            'stock-status--ok': product.stock > 3,
           }">
-            {{ product.stock === 0 ? 'Indisponible — en attente de stock' : product.stock <= 5 ? `${product.stock} restant${product.stock > 1 ? 's' : ''}` : 'En stock' }}
+            {{ product.stock === 0 ? 'Indisponible — en attente de stock' : product.stock <= 3 ? `${product.stock} restant${product.stock > 1 ? 's' : ''}` : 'En stock' }}
           </div>
 
           <button
