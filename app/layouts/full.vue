@@ -73,7 +73,8 @@ watch(() => router.currentRoute.value.path, () => {
     <header class="site-header" :class="{ 'site-header--open': menuOpen }">
       <div class="container site-header__inner">
         <NuxtLink to="/" class="brand" @click="menuOpen = false">
-          <img src="/logo-dark.png" alt="mannaeden" class="brand-logo" />
+          <img src="/logo-light.png" alt="mannaeden" class="brand-logo brand-logo--light" />
+          <img src="/logo-dark.png" alt="mannaeden" class="brand-logo brand-logo--dark" />
         </NuxtLink>
 
         <!-- Nav desktop -->
@@ -176,14 +177,18 @@ watch(() => router.currentRoute.value.path, () => {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 200;
-  transition: background 0.3s, border-color 0.3s;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: var(--color-green-deep);
+  transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+  border-bottom: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .site-header--open {
   background: transparent;
   border-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .site-header__inner {
@@ -207,6 +212,11 @@ watch(() => router.currentRoute.value.path, () => {
   object-fit: cover;
   object-position: center 49%;
 }
+
+.brand-logo--dark { display: none; }
+
+.site-header--open .brand-logo--light { display: none; }
+.site-header--open .brand-logo--dark  { display: block; }
 
 /* ── Nav desktop ── */
 .desktop-nav {

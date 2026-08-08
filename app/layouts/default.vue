@@ -20,7 +20,7 @@ watch(() => router.currentRoute.value.path, () => {
     <header class="site-header">
       <div class="container site-header__inner">
         <NuxtLink to="/" class="brand">
-          <img src="/logo-dark.png" alt="mannaeden" class="brand-logo" />
+          <img src="/logo-light.png" alt="mannaeden" class="brand-logo" />
         </NuxtLink>
 
         <button
