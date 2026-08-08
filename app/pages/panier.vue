@@ -121,17 +121,17 @@ async function onSubmit() {
                 </label>
                 <label class="field">
                   <span class="field-label">Prénom *</span>
-                  <input v-model="prenom" type="text" class="field-input" required autocomplete="given-name">
+                  <input v-model="prenom" type="text" class="field-input" required autocomplete="given-name" maxlength="50">
                 </label>
                 <label class="field">
                   <span class="field-label">Nom *</span>
-                  <input v-model="nom" type="text" class="field-input" required autocomplete="family-name">
+                  <input v-model="nom" type="text" class="field-input" required autocomplete="family-name" maxlength="50">
                 </label>
               </div>
 
               <label class="field">
                 <span class="field-label">Téléphone</span>
-                <input v-model="telephone" type="tel" class="field-input" autocomplete="tel">
+                <input v-model="telephone" type="tel" class="field-input" autocomplete="tel" maxlength="20" pattern="[0-9\s\+\-\(\)]{7,20}">
               </label>
 
               <div class="form-section__divider">
@@ -140,28 +140,28 @@ async function onSubmit() {
 
               <label class="field">
                 <span class="field-label">Adresse *</span>
-                <input v-model="adresseLigne1" type="text" class="field-input" required autocomplete="address-line1">
+                <input v-model="adresseLigne1" type="text" class="field-input" required autocomplete="address-line1" maxlength="100">
               </label>
 
               <label class="field">
                 <span class="field-label">Complément</span>
-                <input v-model="adresseLigne2" type="text" class="field-input" autocomplete="address-line2">
+                <input v-model="adresseLigne2" type="text" class="field-input" autocomplete="address-line2" maxlength="100">
               </label>
 
               <div class="field-row field-row--ville-cp">
                 <label class="field">
                   <span class="field-label">Ville *</span>
-                  <input v-model="ville" type="text" class="field-input" required autocomplete="address-level2">
+                  <input v-model="ville" type="text" class="field-input" required autocomplete="address-level2" maxlength="80">
                 </label>
                 <label class="field">
                   <span class="field-label">Code postal *</span>
-                  <input v-model="codePostal" type="text" class="field-input" required autocomplete="postal-code">
+                  <input v-model="codePostal" type="text" class="field-input" required autocomplete="postal-code" maxlength="5" minlength="4" pattern="[0-9]{4,5}">
                 </label>
               </div>
 
               <label class="field">
                 <span class="field-label">Pays *</span>
-                <input v-model="pays" type="text" class="field-input" required autocomplete="country-name">
+                <input v-model="pays" type="text" class="field-input" required autocomplete="country-name" maxlength="60">
               </label>
 
               <!-- LIVRAISON -->

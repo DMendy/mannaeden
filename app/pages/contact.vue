@@ -52,15 +52,15 @@ async function handleSubmit() {
         <form v-else class="contact-form" @submit.prevent="handleSubmit">
           <div class="field">
             <label class="field-label" for="nom">Nom</label>
-            <input id="nom" v-model="form.nom" class="field-input" type="text" required autocomplete="name" />
+            <input id="nom" v-model="form.nom" class="field-input" type="text" required autocomplete="name" maxlength="100" />
           </div>
           <div class="field">
             <label class="field-label" for="email">E-mail</label>
-            <input id="email" v-model="form.email" class="field-input" type="email" required autocomplete="email" />
+            <input id="email" v-model="form.email" class="field-input" type="email" required autocomplete="email" maxlength="254" />
           </div>
           <div class="field">
             <label class="field-label" for="message">Message</label>
-            <textarea id="message" v-model="form.message" class="field-input field-textarea" rows="6" required minlength="10" />
+            <textarea id="message" v-model="form.message" class="field-input field-textarea" rows="6" required minlength="10" maxlength="2000" />
           </div>
 
           <p v-if="error" class="form-error">{{ error }}</p>

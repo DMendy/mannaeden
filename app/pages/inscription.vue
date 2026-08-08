@@ -68,27 +68,27 @@ async function onSubmit() {
           </div>
           <div class="field">
             <label class="field-label" for="prenom">Prénom *</label>
-            <input id="prenom" v-model="prenom" type="text" class="field-input" required autocomplete="given-name" />
+            <input id="prenom" v-model="prenom" type="text" class="field-input" required autocomplete="given-name" maxlength="50" />
           </div>
           <div class="field">
             <label class="field-label" for="nom">Nom *</label>
-            <input id="nom" v-model="nom" type="text" class="field-input" required autocomplete="family-name" />
+            <input id="nom" v-model="nom" type="text" class="field-input" required autocomplete="family-name" maxlength="50" />
           </div>
         </div>
 
         <div class="field">
           <label class="field-label" for="email">E-mail *</label>
-          <input id="email" v-model="email" type="email" class="field-input" required autocomplete="email" placeholder="votre@email.com" />
+          <input id="email" v-model="email" type="email" class="field-input" required autocomplete="email" placeholder="votre@email.com" maxlength="254" />
         </div>
 
         <div class="field">
           <label class="field-label" for="password">Mot de passe * <span class="field-hint">(8 caractères min.)</span></label>
-          <input id="password" v-model="password" type="password" class="field-input" required minlength="8" autocomplete="new-password" placeholder="••••••••" />
+          <input id="password" v-model="password" type="password" class="field-input" required minlength="8" maxlength="128" autocomplete="new-password" placeholder="••••••••" />
         </div>
 
         <div class="field">
           <label class="field-label" for="tel">Téléphone</label>
-          <input id="tel" v-model="telephone" type="tel" class="field-input" autocomplete="tel" />
+          <input id="tel" v-model="telephone" type="tel" class="field-input" autocomplete="tel" maxlength="20" pattern="[0-9\s\+\-\(\)]{7,20}" />
         </div>
 
         <button type="button" class="addr-toggle" @click="showAdresse = !showAdresse">
@@ -98,25 +98,25 @@ async function onSubmit() {
         <template v-if="showAdresse">
           <div class="field">
             <label class="field-label" for="ligne1">Adresse</label>
-            <input id="ligne1" v-model="adresseLigne1" type="text" class="field-input" autocomplete="address-line1" />
+            <input id="ligne1" v-model="adresseLigne1" type="text" class="field-input" autocomplete="address-line1" maxlength="100" />
           </div>
           <div class="field">
             <label class="field-label" for="ligne2">Complément</label>
-            <input id="ligne2" v-model="adresseLigne2" type="text" class="field-input" autocomplete="address-line2" />
+            <input id="ligne2" v-model="adresseLigne2" type="text" class="field-input" autocomplete="address-line2" maxlength="100" />
           </div>
           <div class="field-row">
             <div class="field">
               <label class="field-label" for="cp">Code postal</label>
-              <input id="cp" v-model="codePostal" type="text" class="field-input" autocomplete="postal-code" />
+              <input id="cp" v-model="codePostal" type="text" class="field-input" autocomplete="postal-code" maxlength="5" minlength="4" pattern="[0-9]{4,5}" />
             </div>
             <div class="field">
               <label class="field-label" for="ville">Ville</label>
-              <input id="ville" v-model="ville" type="text" class="field-input" autocomplete="address-level2" />
+              <input id="ville" v-model="ville" type="text" class="field-input" autocomplete="address-level2" maxlength="80" />
             </div>
           </div>
           <div class="field">
             <label class="field-label" for="pays">Pays</label>
-            <input id="pays" v-model="pays" type="text" class="field-input" autocomplete="country-name" />
+            <input id="pays" v-model="pays" type="text" class="field-input" autocomplete="country-name" maxlength="60" />
           </div>
         </template>
 

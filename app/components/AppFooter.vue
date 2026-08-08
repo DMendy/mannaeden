@@ -86,9 +86,11 @@ const year = new Date().getFullYear()
 }
 
 .footer-logo-img {
-  height: 32px;
-  width: auto;
   display: block;
+  width: 200px;
+  height: 52px;
+  object-fit: cover;
+  object-position: center 49%;
 }
 
 .footer-tagline {

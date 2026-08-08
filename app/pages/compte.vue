@@ -158,33 +158,33 @@ async function saveProfile() {
 
             <div class="field">
               <label class="field-label" for="tel">Téléphone</label>
-              <input id="tel" v-model="telephone" type="tel" class="field-input" autocomplete="tel" />
+              <input id="tel" v-model="telephone" type="tel" class="field-input" autocomplete="tel" maxlength="20" pattern="[0-9\s\+\-\(\)]{7,20}" />
             </div>
 
             <div class="field">
               <label class="field-label" for="ligne1">Adresse</label>
-              <input id="ligne1" v-model="adresseLigne1" type="text" class="field-input" autocomplete="address-line1" />
+              <input id="ligne1" v-model="adresseLigne1" type="text" class="field-input" autocomplete="address-line1" maxlength="100" />
             </div>
 
             <div class="field">
               <label class="field-label" for="ligne2">Complément</label>
-              <input id="ligne2" v-model="adresseLigne2" type="text" class="field-input" autocomplete="address-line2" />
+              <input id="ligne2" v-model="adresseLigne2" type="text" class="field-input" autocomplete="address-line2" maxlength="100" />
             </div>
 
             <div class="field-row field-row--ville-cp">
               <div class="field">
                 <label class="field-label" for="ville">Ville</label>
-                <input id="ville" v-model="ville" type="text" class="field-input" autocomplete="address-level2" />
+                <input id="ville" v-model="ville" type="text" class="field-input" autocomplete="address-level2" maxlength="80" />
               </div>
               <div class="field field--cp">
                 <label class="field-label" for="cp">Code postal</label>
-                <input id="cp" v-model="codePostal" type="text" class="field-input" autocomplete="postal-code" />
+                <input id="cp" v-model="codePostal" type="text" class="field-input" autocomplete="postal-code" maxlength="5" minlength="4" pattern="[0-9]{4,5}" />
               </div>
             </div>
 
             <div class="field">
               <label class="field-label" for="pays">Pays</label>
-              <input id="pays" v-model="pays" type="text" class="field-input" autocomplete="country-name" />
+              <input id="pays" v-model="pays" type="text" class="field-input" autocomplete="country-name" maxlength="60" />
             </div>
 
             <p v-if="error" class="form-error">{{ error }}</p>

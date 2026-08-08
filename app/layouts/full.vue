@@ -203,14 +203,14 @@ watch(() => router.currentRoute.value.path, () => {
   z-index: 201;
   display: flex;
   align-items: center;
-  height: 28px;
 }
 
 .brand-logo {
-  height: 28px;
-  width: auto;
   display: block;
-  transition: opacity 0.3s;
+  width: 180px;
+  height: 44px;
+  object-fit: cover;
+  object-position: center 49%;
 }
 
 .brand-logo--dark { display: none; }

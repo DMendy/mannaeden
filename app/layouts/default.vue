@@ -79,13 +79,14 @@ watch(() => router.currentRoute.value.path, () => {
 .brand {
   display: flex;
   align-items: center;
-  height: 28px;
 }
 
 .brand-logo {
-  height: 28px;
-  width: auto;
   display: block;
+  width: 180px;
+  height: 44px;
+  object-fit: cover;
+  object-position: center 49%;
 }
 
 .nav {

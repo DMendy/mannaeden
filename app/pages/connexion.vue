@@ -47,6 +47,7 @@ async function onSubmit() {
             required
             autocomplete="email"
             placeholder="votre@email.com"
+            maxlength="254"
           />
         </div>
 
@@ -60,6 +61,7 @@ async function onSubmit() {
             required
             autocomplete="current-password"
             placeholder="••••••••"
+            maxlength="128"
           />
         </div>
 
