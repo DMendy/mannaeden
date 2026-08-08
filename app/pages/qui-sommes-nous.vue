@@ -50,13 +50,13 @@ onUnmounted(() => ctx?.revert())
             <h2 class="camille-title">À l'origine de mannaeden</h2>
             <div class="divider" />
             <p class="camille-body">
-              Je suis Camille Gicquiaud, fondatrice de mannaeden. Depuis des années, la foi occupe une place centrale dans ma vie — mais j'ai longtemps cherché un outil qui m'aide à l'incarner concrètement, au quotidien.
+              Je m'appelle Camille et je suis la fondatrice de mannaeden. Cela fait quelques années que j'ai rencontré le Seigneur, mais j'ai longtemps cherché un outil qui m'aiderait à m'enraciner dans ma foi et à l'incarner concrètement au quotidien.
             </p>
             <p class="camille-body">
-              C'est de ce besoin qu'est né <em>Graines de Foi</em> : un planner pensé pour aller au-delà de la simple organisation. Un espace où la prière, la méditation, la gratitude et la planification se rejoignent — chaque matin, chaque semaine, toute l'année.
+              C'est de ce besoin qu'est né <em>Graines de Foi</em>. Ce planner a été créé afin de vous offrir un espace où la prière, la méditation et la planification se rejoignent chaque matin, chaque semaine, tout au long de l'année.
             </p>
             <p class="camille-body">
-              mannaeden s'inspire de la manne dans l'Exode — cette nourriture fraîche, quotidienne, suffisante. Un rappel que la foi se nourrit elle aussi, jour après jour, d'attention et d'intentionnalité.
+              mannaeden s'inspire de la manne dans l'Exode — cette nourriture fraîche, quotidienne et suffisante est un rappel que la foi se nourrit elle aussi, jour après jour, d'attention et d'intention.
             </p>
             <p class="camille-verse">
               <em>« L'homme ne vivra pas de pain seulement, mais de toute parole qui sort de la bouche de Dieu. »</em>

@@ -20,21 +20,12 @@ const GALLERY_IMAGES = [
 const activeImage = ref(GALLERY_IMAGES[0])
 
 const contents = [
-  'Une page de couverture',
-  'Une page d\'accueil de présentation',
-  'Une page expliquant comment bien commencer son utilisation',
-  'Un journal de gratitude',
-  'Deux pages présentant les thèmes abordés chaque mois',
-  'Un bilan spirituel hebdomadaire',
-  'Une page mensuelle dédiée à l\'explication du thème du mois',
   'Un espace de méditation pour chaque jour de l\'année',
-  '13 témoignages',
-  'Des défis répartis tout au long de l\'année — communion, introspection, créativité, confiance en soi, partage et amour',
-  'Des pages consacrées à la prière',
-  'Une « To Do List » des exaucements de prières',
-  'Un journal de rêves — notes, interprétation et prières associées',
-  'Une partie « Notes » pour écrire librement',
-  'Une partie « Dessin » pour exprimer librement ses ressentis',
+  'Bilans hebdomadaires',
+  'Journal de rêves, de prières et de gratitude',
+  'Des témoignages & des défis spirituels',
+  'Une section pour écrire vos notes',
+  'Un espace pour dessiner',
 ]
 
 onMounted(async () => {
@@ -141,14 +132,16 @@ function handleOrder() {
           <div class="divider" />
 
           <p class="product-desc">
-            Un compagnon annuel créé par Camille Gicquiaud pour nourrir votre vie spirituelle, structurer vos journées et vous accompagner dans la foi — chaque matin, chaque semaine, toute l'année.
+            Graines de Foi est un planner chrétien conçu pour vous accompagner tout au long de l'année. À travers 12 thèmes inspirés de la Parole de Dieu, il vous aide à structurer votre quotidien, à cultiver votre vie intérieure et à grandir dans votre foi.
           </p>
 
           <ul class="product-teaser">
             <li>Un espace de méditation pour chaque jour de l'année</li>
-            <li>Bilans hebdomadaires et mensuels</li>
+            <li>Bilans hebdomadaires</li>
             <li>Journal de rêves, de prières et de gratitude</li>
-            <li>13 témoignages &amp; des défis spirituels</li>
+            <li>Des témoignages &amp; des défis spirituels</li>
+            <li>Une section pour écrire vos notes</li>
+            <li>Un espace pour dessiner</li>
           </ul>
 
           <div v-if="loading" class="product-bottom">

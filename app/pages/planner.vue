@@ -4,6 +4,21 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 definePageMeta({ layout: 'full' })
 
+const THEMES = [
+  'Aimer et être aimé',
+  'Avoir confiance en soi et en Dieu',
+  'Place à la paix et à la joie',
+  'Apprendre à être fidèle',
+  'L\'importance du temps',
+  'Tes projets méritent d\'être vécus',
+  'Avoir de bonnes relations',
+  'Entre bonté, bénignité et douceur',
+  'Devenir patient',
+  'Abandonner les mauvaises habitudes',
+  'La persévérance amène au salut',
+  'Voir Dieu achever son œuvre',
+]
+
 const root = ref<HTMLElement | null>(null)
 let ctx: gsap.Context
 
@@ -64,32 +79,27 @@ onUnmounted(() => ctx?.revert())
           <div class="feature-card">
             <div class="feature-card__num">01</div>
             <h3>Plan journalier</h3>
-            <p>Chaque jour dispose d'un espace structuré : intentions du matin, tâches prioritaires, espace de prière et réflexion du soir.</p>
+            <p>Chaque jour dispose d'un espace structuré : un verset à méditer, une prière liée au verset et un espace pour exprimer votre gratitude.</p>
           </div>
           <div class="feature-card">
             <div class="feature-card__num">02</div>
-            <h3>Verset de la semaine</h3>
-            <p>Un verset biblique guide chaque semaine — à méditer, copier, mémoriser. Une invitation à laisser la Parole infuser votre quotidien.</p>
+            <h3>Bilan de la semaine</h3>
+            <p>À la fin de chaque semaine, vous pouvez revenir sur le bilan — pour une introspection personnelle et donner chaque semaine le meilleur de vous-même.</p>
           </div>
           <div class="feature-card">
             <div class="feature-card__num">03</div>
             <h3>Plan mensuel</h3>
-            <p>Vue d'ensemble du mois avec objectifs, intentions et espace de bilan. Pour ne jamais perdre le fil de ce qui compte vraiment.</p>
+            <p>Vue d'ensemble concernant un thème précis donné chaque mois.</p>
           </div>
           <div class="feature-card">
             <div class="feature-card__num">04</div>
             <h3>Tracker de prière</h3>
-            <p>Notez vos sujets de prière, vos demandes et les réponses que vous avez reçues. Un témoin de la fidélité de Dieu dans votre vie.</p>
+            <p>Notez vos sujets de prière, vos demandes et les réponses que vous avez reçues.</p>
           </div>
           <div class="feature-card">
             <div class="feature-card__num">05</div>
             <h3>Pages d'écriture libres</h3>
-            <p>Des espaces blancs pour écrire, dessiner, coller — votre foi s'exprime comme elle le souhaite, sans règle ni format imposé.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-card__num">06</div>
-            <h3>Bilan annuel</h3>
-            <p>En début et fin d'année, des pages dédiées pour contempler le chemin parcouru et poser des intentions pour la saison à venir.</p>
+            <p>Des espaces blancs pour écrire, dessiner, coller… Votre foi s'exprime comme elle le souhaite, sans règle ni format imposé.</p>
           </div>
         </div>
       </div>
@@ -103,15 +113,33 @@ onUnmounted(() => ctx?.revert())
       </div>
     </section>
 
+    <!-- ══ 12 THÈMES ══ -->
+    <section class="section" data-reveal>
+      <div class="container">
+        <div class="themes-intro">
+          <span class="eyebrow" style="display:block;text-align:center">Les 12 thèmes du planner</span>
+          <h2 class="section-title" style="text-align:center">Un programme, mois après mois.</h2>
+          <p class="section-subtitle" style="text-align:center;max-width:560px;margin-inline:auto">Chaque mois explore un thème spirituel profond, accompagné de versets, de réflexions et d'exercices pratiques pour avancer concrètement.</p>
+        </div>
+
+        <div class="themes-grid" data-stagger>
+          <div v-for="(theme, i) in THEMES" :key="i" class="theme-card">
+            <span class="theme-card__num">{{ String(i + 1).padStart(2, '0') }}</span>
+            <p class="theme-card__label">{{ theme }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ══ POUR QUI ══ -->
-    <section class="section">
+    <section class="section section--alt">
       <div class="container">
         <div class="for-who-grid" data-reveal>
           <div class="for-who-content">
             <span class="eyebrow">Pour qui ?</span>
             <h2 class="section-title">Fait pour vous, quel que soit votre chemin.</h2>
             <div class="divider" />
-            <p class="section-subtitle">mannaeden n'exige rien de particulier. Pas besoin de connaître la Bible par cœur ou de prier depuis des années. Le planner est conçu pour accompagner toutes les étapes — la curiosité, le doute, la foi active, la redécouverte.</p>
+            <p class="section-subtitle">mannaeden n'exige rien de particulier. Pas besoin de connaître la Bible par cœur ou de prier depuis des années. Le planner est conçu pour accompagner toutes les étapes — la curiosité, le doute, la foi active ou la redécouverte.</p>
           </div>
           <div class="for-who-list" data-stagger>
             <div class="for-who-item">
@@ -279,15 +307,59 @@ onUnmounted(() => ctx?.revert())
   line-height: 1.65;
 }
 
+/* 12 THÈMES */
+.themes-intro {
+  margin-bottom: 3rem;
+}
+
+.themes-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.theme-card {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.25rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.theme-card:hover {
+  border-color: var(--color-green-mid);
+  box-shadow: 0 4px 16px rgba(32, 44, 23, 0.08);
+}
+
+.theme-card__num {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--color-green-mid);
+  line-height: 1;
+}
+
+.theme-card__label {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .planner-hero__inner { grid-template-columns: 1fr; gap: 3rem; }
   .planner-hero { padding-top: 8rem; }
   .features-grid { grid-template-columns: 1fr 1fr; }
   .for-who-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .themes-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 600px) {
   .features-grid { grid-template-columns: 1fr; }
+  .themes-grid { grid-template-columns: repeat(2, 1fr); }
 }
 </style>

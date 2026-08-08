@@ -99,8 +99,8 @@ function setupReveals() {
         </h1>
 
         <p class="hero__sub">
-          Un compagnon pour votre vie intérieure — structuré,
-          ancré dans la foi, conçu pour toute une année.
+          Un planner conçu pour structurer et ancrer votre vie
+          tout au long de l'année.
         </p>
 
         <div class="hero__actions">
@@ -145,13 +145,12 @@ function setupReveals() {
             <h2 class="page-title p-item">La vision</h2>
             <hr class="page-rule p-item" />
             <p class="page-body p-item">
-              Dans l'Exode, la manne tombait chaque matin — fraîche, suffisante, renouvelée.
-              <em>mannaeden</em> s'inspire de cette image : nourrir votre vie intérieure,
-              un jour à la fois.
+              Dans l'Exode, la manne tombait chaque matin. <em>mannaeden</em> s'inspire
+              de cette image et signifie : « la provision du jardin de Dieu ».
             </p>
             <p class="page-body p-item">
-              Un planner ancré dans la foi, ouvert à tous — croyants de longue date,
-              curieux, ou simplement en chemin vers quelque chose de plus grand.
+              Un planner écrit et ancré dans la Parole de Dieu, ouvert à tous — croyants
+              de longue date, curieux ou simplement en chemin vers quelque chose de plus grand.
             </p>
           </div>
           <div class="book-page book-page--right">
@@ -233,21 +232,12 @@ function setupReveals() {
           <div class="planner-contents">
             <p class="planner-contents__intro">Il comprend :</p>
             <ul class="planner-list">
-              <li>Une page de couverture</li>
-              <li>Une page d'accueil de présentation</li>
-              <li>Une page expliquant comment bien commencer son utilisation</li>
-              <li>Un journal de gratitude</li>
-              <li>Deux pages présentant les thèmes abordés chaque mois</li>
-              <li>Un bilan spirituel hebdomadaire</li>
-              <li>Une page mensuelle dédiée à l'explication du thème du mois</li>
               <li>Un espace de méditation pour chaque jour de l'année</li>
-              <li>13 témoignages</li>
-              <li>Des défis répartis tout au long de l'année — communion, introspection, créativité, confiance en soi, partage et amour</li>
-              <li>Des pages consacrées à la prière</li>
-              <li>Une « To Do List » des exaucements de prières</li>
-              <li>Un journal de rêves — interprétation et prières associées</li>
-              <li>Une partie « Notes » pour écrire librement</li>
-              <li>Une partie « Dessin » pour exprimer librement ses ressentis</li>
+              <li>Bilans hebdomadaires</li>
+              <li>Journal de rêves, de prières et de gratitude</li>
+              <li>Des témoignages &amp; des défis spirituels</li>
+              <li>Une section pour écrire vos notes</li>
+              <li>Un espace pour dessiner</li>
             </ul>
             <div class="planner-cta">
               <NuxtLink to="/panier" class="btn btn-primary">Commander — 39,90 €</NuxtLink>
@@ -267,6 +257,37 @@ function setupReveals() {
           <div class="planner-photo">
             <img src="/5CE7F5F9-E94F-4BD1-A942-AA21679C2DBD.PNG" alt="Dos du planner — GICQUIAUD Camille" />
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ TÉMOIGNAGES ══════════════════════════════════ -->
+    <section class="section temoignages-section" data-reveal>
+      <div class="container">
+        <div class="temoignages-intro">
+          <span class="eyebrow" style="display:block;text-align:center">Ils l'ont lu</span>
+          <h2 class="section-title" style="text-align:center">Ce que vivent ceux qui l'utilisent.</h2>
+        </div>
+
+        <div class="temoignages-grid">
+          <blockquote class="temo-card">
+            <p class="temo-text">« Ce planner a complètement transformé ma façon de commencer mes journées. Pour la première fois, ma foi et mon organisation ne font plus qu'un. »</p>
+            <footer class="temo-author">
+              <span class="temo-name">À venir</span>
+            </footer>
+          </blockquote>
+          <blockquote class="temo-card">
+            <p class="temo-text">« Je n'aurais jamais cru qu'un agenda puisse m'aider à prier. Et pourtant, depuis que j'utilise mannaeden, je ne passe plus une journée sans. »</p>
+            <footer class="temo-author">
+              <span class="temo-name">À venir</span>
+            </footer>
+          </blockquote>
+          <blockquote class="temo-card">
+            <p class="temo-text">« Chaque page est une invitation à m'arrêter, à respirer et à me rappeler ce qui compte vraiment. Un objet que j'offrirai sans hésiter. »</p>
+            <footer class="temo-author">
+              <span class="temo-name">À venir</span>
+            </footer>
+          </blockquote>
         </div>
       </div>
     </section>
@@ -849,5 +870,54 @@ function setupReveals() {
   .book-page--left { border-bottom: 1px solid var(--color-border); box-shadow: none; }
 
   .title-row { white-space: normal; }
+}
+
+/* ══ TÉMOIGNAGES ════════════════════════════════════ */
+.temoignages-section { background: var(--color-bg-alt); }
+
+.temoignages-intro { margin-bottom: 3rem; }
+
+.temoignages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.temo-card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 0;
+}
+
+.temo-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-text);
+  flex: 1;
+}
+
+.temo-author {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.temo-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-green);
+}
+
+@media (max-width: 900px) {
+  .temoignages-grid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
 }
 </style>
