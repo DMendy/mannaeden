@@ -14,11 +14,8 @@ async function onSubmit() {
   error.value = null
   loading.value = true
   try {
-    const { user } = useAuth()
     await login({ email: email.value, password: password.value })
-    const redirect = typeof route.query.redirect === 'string'
-      ? route.query.redirect
-      : user.value?.role === 'ADMIN' ? '/admin' : '/compte'
+    const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/compte'
     router.push(redirect)
   } catch (err) {
     error.value = err instanceof Error ? err.message : 'Connexion impossible.'
@@ -29,7 +26,7 @@ async function onSubmit() {
 </script>
 
 <template>
-  <div class="auth-wrapper">
+   <div class="auth-wrapper">
     <div class="auth-page">
       <div class="auth-header">
         <span class="eyebrow">Mon compte</span>
@@ -47,7 +44,6 @@ async function onSubmit() {
             required
             autocomplete="email"
             placeholder="votre@email.com"
-            maxlength="254"
           />
         </div>
 
@@ -61,7 +57,6 @@ async function onSubmit() {
             required
             autocomplete="current-password"
             placeholder="••••••••"
-            maxlength="128"
           />
         </div>
 
@@ -117,8 +112,6 @@ async function onSubmit() {
   padding: 0.9rem;
   margin-top: 0.5rem;
   font-size: 0.95rem;
-  background: #354028 !important;
-  color: #ffffff !important;
 }
 
 .auth-footer {
