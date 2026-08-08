@@ -165,6 +165,7 @@ watch(() => router.currentRoute.value.path, () => {
     </div>
 
     <main><slot /></main>
+    <AppFooter />
   </div>
 </template>
 

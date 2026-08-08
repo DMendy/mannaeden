@@ -52,6 +52,7 @@ watch(() => router.currentRoute.value.path, () => {
     <main class="container page">
       <slot />
     </main>
+    <AppFooter />
   </div>
 </template>
 
