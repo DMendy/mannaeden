@@ -384,7 +384,7 @@ onUnmounted(() => ctx?.revert())
 .features-panel-divider {
   width: 40px;
   height: 2px;
-  background: var(--color-gold);
+  background: var(--color-green-mid);
   margin: 1.25rem 0;
 }
 
@@ -437,7 +437,7 @@ onUnmounted(() => ctx?.revert())
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--color-gold);
+  background: var(--color-green-mid);
   margin-top: 0.45rem;
 }
 

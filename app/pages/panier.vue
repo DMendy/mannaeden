@@ -249,10 +249,10 @@ async function onSubmit() {
             </div>
 
             <div class="recap-verse">
-              <p class="verse-text" style="font-size: 0.95rem">
+              <p class="verse-text" style="font-size: 0.95rem; color: var(--color-green-mid)">
                 « Cherchez premièrement le royaume et la justice de Dieu. »
               </p>
-              <p class="verse-ref">Matthieu 6 : 33</p>
+              <p class="verse-ref" style="color: var(--color-muted)">Matthieu 6 : 33</p>
             </div>
           </div>
         </div>
