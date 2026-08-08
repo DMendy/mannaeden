@@ -11,7 +11,8 @@ export default defineNuxtConfig({
         { name: 'description', content: 'Un planner chrétien conçu pour structurer et ancrer votre vie tout au long de l\'année.' }
       ],
       link: [
-        { rel: 'icon', type: 'image/png', href: '/logo-dark.png' }
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'apple-touch-icon', href: '/logo-dark.png' }
       ]
     }
   },

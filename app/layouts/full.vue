@@ -257,6 +257,11 @@ watch(() => router.currentRoute.value.path, () => {
 .btn--nav {
   padding: 0.5rem 1.25rem;
   font-size: 0.82rem;
+  color: #fff;
+}
+
+.btn--nav:hover {
+  color: #fff;
 }
 
 /* ── Hamburger (mobile only) ── */
