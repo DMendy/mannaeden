@@ -78,6 +78,8 @@ watch(() => router.currentRoute.value.path, () => {
         <nav class="desktop-nav">
           <NuxtLink to="/qui-sommes-nous">Qui suis-je ?</NuxtLink>
           <NuxtLink to="/boutique">Graines de Foi</NuxtLink>
+          <NuxtLink to="/planner">Pour qui ?</NuxtLink>
+          <NuxtLink to="/nos-valeurs">Nos valeurs</NuxtLink>
           <NuxtLink to="/contact">Contact</NuxtLink>
           <span class="nav-sep" />
           <template v-if="user">

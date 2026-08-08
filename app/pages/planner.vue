@@ -106,10 +106,10 @@ onUnmounted(() => ctx?.revert())
     </section>
 
     <!-- ══ VERSE ══ -->
-    <section class="section section--alt" style="text-align: center">
+    <section class="section section--deep" style="text-align: center">
       <div class="container--narrow" data-reveal>
         <p class="verse-text">« Ta parole est une lampe à mes pieds, et une lumière sur mon sentier. »</p>
-        <p class="verse-ref">Psaume 119 : 105</p>
+        <p class="verse-ref" style="color: rgba(255,255,255,0.4)">Psaume 119 : 105</p>
       </div>
     </section>
 
