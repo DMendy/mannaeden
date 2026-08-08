@@ -60,8 +60,10 @@ watch(() => router.currentRoute.value.path, () => {
 
 <style scoped>
 .site-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: var(--color-green-deep);
+  border-bottom: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -95,30 +97,30 @@ watch(() => router.currentRoute.value.path, () => {
 
 .nav a {
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.62);
+  color: var(--color-muted);
   transition: color 0.2s;
 }
 
 .nav a:hover,
 .nav a.router-link-active {
-  color: #fff;
+  color: var(--color-text);
 }
 
 .nav-sep {
   width: 1px;
   height: 18px;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--color-border);
 }
 
 .link-btn {
   background: none;
   border: none;
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--color-muted);
   transition: color 0.2s;
 }
 
-.link-btn.danger:hover { color: #ff8080; }
+.link-btn.danger:hover { color: var(--color-danger); }
 
 .btn--nav {
   padding: 0.5rem 1.25rem;
@@ -147,7 +149,7 @@ watch(() => router.currentRoute.value.path, () => {
   display: block;
   width: 22px;
   height: 1.5px;
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--color-text);
   transition: all 0.25s;
   transform-origin: center;
 }

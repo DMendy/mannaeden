@@ -227,32 +227,32 @@ watch(() => router.currentRoute.value.path, () => {
 
 .desktop-nav a {
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.62);
+  color: var(--color-muted);
   transition: color 0.2s;
 }
 
 .desktop-nav a:hover,
 .desktop-nav a.router-link-active {
-  color: #fff;
+  color: var(--color-text);
 }
 
 .nav-sep {
   width: 1px;
   height: 18px;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--color-border);
 }
 
 .link-btn {
   background: none;
   border: none;
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--color-muted);
   cursor: pointer;
   font-family: inherit;
   transition: color 0.2s;
 }
 
-.link-btn:hover { color: rgba(255, 255, 255, 0.9); }
+.link-btn:hover { color: var(--color-danger); }
 
 .btn--nav {
   padding: 0.5rem 1.25rem;
@@ -283,10 +283,12 @@ watch(() => router.currentRoute.value.path, () => {
 .bar {
   display: block;
   height: 1.5px;
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--color-green-deep);
   transform-origin: center;
-  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.3s, width 0.3s;
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.3s, background 0.3s, width 0.3s;
 }
+
+.site-header--open .bar { background: rgba(255,255,255,0.8); }
 
 .bar-top { width: 20px; }
 .bar-btm { width: 28px; }
