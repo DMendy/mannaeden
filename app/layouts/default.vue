@@ -20,7 +20,7 @@ watch(() => router.currentRoute.value.path, () => {
     <header class="site-header">
       <div class="container site-header__inner">
         <NuxtLink to="/" class="brand">
-          <img src="/logo-light.png" alt="mannaeden" class="brand-logo" />
+          <img src="/logo-dark.png" alt="mannaeden" class="brand-logo" />
         </NuxtLink>
 
         <button
@@ -60,10 +60,8 @@ watch(() => router.currentRoute.value.path, () => {
 
 <style scoped>
 .site-header {
-  border-bottom: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-green-deep);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -97,30 +95,30 @@ watch(() => router.currentRoute.value.path, () => {
 
 .nav a {
   font-size: 0.875rem;
-  color: var(--color-muted);
+  color: rgba(255, 255, 255, 0.62);
   transition: color 0.2s;
 }
 
 .nav a:hover,
 .nav a.router-link-active {
-  color: var(--color-text);
+  color: #fff;
 }
 
 .nav-sep {
   width: 1px;
   height: 18px;
-  background: var(--color-border);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .link-btn {
   background: none;
   border: none;
   font-size: 0.875rem;
-  color: var(--color-muted);
+  color: rgba(255, 255, 255, 0.55);
   transition: color 0.2s;
 }
 
-.link-btn.danger:hover { color: var(--color-danger); }
+.link-btn.danger:hover { color: #ff8080; }
 
 .btn--nav {
   padding: 0.5rem 1.25rem;
@@ -128,7 +126,8 @@ watch(() => router.currentRoute.value.path, () => {
 }
 
 .nav a.btn--nav,
-.nav a.btn--nav:hover {
+.nav a.btn--nav:hover,
+.nav a.btn--nav:focus {
   color: #fff;
 }
 
@@ -148,7 +147,7 @@ watch(() => router.currentRoute.value.path, () => {
   display: block;
   width: 22px;
   height: 1.5px;
-  background: var(--color-text);
+  background: rgba(255, 255, 255, 0.85);
   transition: all 0.25s;
   transform-origin: center;
 }

@@ -73,8 +73,7 @@ watch(() => router.currentRoute.value.path, () => {
     <header class="site-header" :class="{ 'site-header--open': menuOpen }">
       <div class="container site-header__inner">
         <NuxtLink to="/" class="brand" @click="menuOpen = false">
-          <img src="/logo-light.png" alt="mannaeden" class="brand-logo brand-logo--light" />
-          <img src="/logo-dark.png" alt="mannaeden" class="brand-logo brand-logo--dark" />
+          <img src="/logo-dark.png" alt="mannaeden" class="brand-logo" />
         </NuxtLink>
 
         <!-- Nav desktop -->
@@ -177,18 +176,14 @@ watch(() => router.currentRoute.value.path, () => {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 200;
-  transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
-  border-bottom: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  transition: background 0.3s, border-color 0.3s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-green-deep);
 }
 
 .site-header--open {
   background: transparent;
   border-color: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
 .site-header__inner {
@@ -213,11 +208,6 @@ watch(() => router.currentRoute.value.path, () => {
   object-position: center 49%;
 }
 
-.brand-logo--dark { display: none; }
-
-.site-header--open .brand-logo--light { display: none; }
-.site-header--open .brand-logo--dark  { display: block; }
-
 /* ── Nav desktop ── */
 .desktop-nav {
   display: flex;
@@ -227,32 +217,32 @@ watch(() => router.currentRoute.value.path, () => {
 
 .desktop-nav a {
   font-size: 0.875rem;
-  color: var(--color-muted);
+  color: rgba(255, 255, 255, 0.62);
   transition: color 0.2s;
 }
 
 .desktop-nav a:hover,
 .desktop-nav a.router-link-active {
-  color: var(--color-text);
+  color: #fff;
 }
 
 .nav-sep {
   width: 1px;
   height: 18px;
-  background: var(--color-border);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .link-btn {
   background: none;
   border: none;
   font-size: 0.875rem;
-  color: var(--color-muted);
+  color: rgba(255, 255, 255, 0.55);
   cursor: pointer;
   font-family: inherit;
   transition: color 0.2s;
 }
 
-.link-btn:hover { color: var(--color-danger); }
+.link-btn:hover { color: rgba(255, 255, 255, 0.9); }
 
 .btn--nav {
   padding: 0.5rem 1.25rem;
@@ -283,12 +273,10 @@ watch(() => router.currentRoute.value.path, () => {
 .bar {
   display: block;
   height: 1.5px;
-  background: var(--color-green-deep);
+  background: rgba(255, 255, 255, 0.85);
   transform-origin: center;
-  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.3s, background 0.3s, width 0.3s;
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.3s, width 0.3s;
 }
-
-.site-header--open .bar { background: rgba(255,255,255,0.8); }
 
 .bar-top { width: 20px; }
 .bar-btm { width: 28px; }

@@ -122,7 +122,7 @@ function setupReveals() {
         </div>
         <div class="cover-label">
           <span class="cover-brand">mannaeden</span>
-          <span class="cover-year">le planner · 2025</span>
+          <span class="cover-year">le planner · 2026</span>
         </div>
       </div>
 
@@ -257,37 +257,6 @@ function setupReveals() {
           <div class="planner-photo">
             <img src="/5CE7F5F9-E94F-4BD1-A942-AA21679C2DBD.PNG" alt="Dos du planner — GICQUIAUD Camille" />
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══ TÉMOIGNAGES ══════════════════════════════════ -->
-    <section class="section temoignages-section" data-reveal>
-      <div class="container">
-        <div class="temoignages-intro">
-          <span class="eyebrow" style="display:block;text-align:center">Ils l'ont lu</span>
-          <h2 class="section-title" style="text-align:center">Ce que vivent ceux qui l'utilisent.</h2>
-        </div>
-
-        <div class="temoignages-grid">
-          <blockquote class="temo-card">
-            <p class="temo-text">« Ce planner a complètement transformé ma façon de commencer mes journées. Pour la première fois, ma foi et mon organisation ne font plus qu'un. »</p>
-            <footer class="temo-author">
-              <span class="temo-name">À venir</span>
-            </footer>
-          </blockquote>
-          <blockquote class="temo-card">
-            <p class="temo-text">« Je n'aurais jamais cru qu'un agenda puisse m'aider à prier. Et pourtant, depuis que j'utilise mannaeden, je ne passe plus une journée sans. »</p>
-            <footer class="temo-author">
-              <span class="temo-name">À venir</span>
-            </footer>
-          </blockquote>
-          <blockquote class="temo-card">
-            <p class="temo-text">« Chaque page est une invitation à m'arrêter, à respirer et à me rappeler ce qui compte vraiment. Un objet que j'offrirai sans hésiter. »</p>
-            <footer class="temo-author">
-              <span class="temo-name">À venir</span>
-            </footer>
-          </blockquote>
         </div>
       </div>
     </section>
@@ -878,52 +847,4 @@ function setupReveals() {
   .title-row { white-space: nowrap; }
 }
 
-/* ══ TÉMOIGNAGES ════════════════════════════════════ */
-.temoignages-section { background: var(--color-bg-alt); }
-
-.temoignages-intro { margin-bottom: 3rem; }
-
-.temoignages-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.temo-card {
-  background: #fff;
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  padding: 2rem 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin: 0;
-}
-
-.temo-text {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1rem;
-  line-height: 1.75;
-  color: var(--color-text);
-  flex: 1;
-}
-
-.temo-author {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--color-border);
-}
-
-.temo-name {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-green);
-}
-
-@media (max-width: 900px) {
-  .temoignages-grid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
-}
 </style>
