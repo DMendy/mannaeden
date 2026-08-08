@@ -4,7 +4,9 @@
 
       <!-- Brand -->
       <div class="footer-brand">
-        <NuxtLink to="/" class="footer-logo">mannaeden</NuxtLink>
+        <NuxtLink to="/" class="footer-logo">
+          <img src="/logo-dark.png" alt="mannaeden" class="footer-logo-img" />
+        </NuxtLink>
         <p class="footer-tagline">Un planner ancré dans la foi,<br>pour toute une année.</p>
         <p class="footer-verse">
           « Ta parole est une lampe à mes pieds. »
@@ -79,13 +81,14 @@ const year = new Date().getFullYear()
 
 /* Brand */
 .footer-logo {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.9);
   display: block;
   margin-bottom: 1rem;
+}
+
+.footer-logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
 }
 
 .footer-tagline {

@@ -19,7 +19,9 @@ watch(() => router.currentRoute.value.path, () => {
     <NuxtRouteAnnouncer />
     <header class="site-header">
       <div class="container site-header__inner">
-        <NuxtLink to="/" class="brand">mannaeden</NuxtLink>
+        <NuxtLink to="/" class="brand">
+          <img src="/logo-light.png" alt="mannaeden" class="brand-logo" />
+        </NuxtLink>
 
         <button
           class="hamburger"
@@ -75,11 +77,15 @@ watch(() => router.currentRoute.value.path, () => {
 }
 
 .brand {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 1.3rem;
-  letter-spacing: 0.04em;
-  color: var(--color-green-deep);
+  display: flex;
+  align-items: center;
+  height: 28px;
+}
+
+.brand-logo {
+  height: 28px;
+  width: auto;
+  display: block;
 }
 
 .nav {

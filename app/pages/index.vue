@@ -845,6 +845,12 @@ function setupReveals() {
 
   .hero__photo { order: 2; }
 
+  .hero__title {
+    font-size: clamp(1.2rem, 5.5vw, 3rem);
+  }
+
+  .title-row { white-space: nowrap; }
+
   .planner-grid {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -869,7 +875,7 @@ function setupReveals() {
 
   .book-page--left { border-bottom: 1px solid var(--color-border); box-shadow: none; }
 
-  .title-row { white-space: normal; }
+  .title-row { white-space: nowrap; }
 }
 
 /* ══ TÉMOIGNAGES ════════════════════════════════════ */

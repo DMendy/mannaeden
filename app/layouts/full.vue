@@ -72,7 +72,10 @@ watch(() => router.currentRoute.value.path, () => {
 
     <header class="site-header" :class="{ 'site-header--open': menuOpen }">
       <div class="container site-header__inner">
-        <NuxtLink to="/" class="brand" @click="menuOpen = false">mannaeden</NuxtLink>
+        <NuxtLink to="/" class="brand" @click="menuOpen = false">
+          <img src="/logo-light.png" alt="mannaeden" class="brand-logo brand-logo--light" />
+          <img src="/logo-dark.png" alt="mannaeden" class="brand-logo brand-logo--dark" />
+        </NuxtLink>
 
         <!-- Nav desktop -->
         <nav class="desktop-nav">
@@ -196,17 +199,24 @@ watch(() => router.currentRoute.value.path, () => {
 }
 
 .brand {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 1.3rem;
-  letter-spacing: 0.04em;
-  color: var(--color-green-deep);
   position: relative;
   z-index: 201;
-  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  height: 28px;
 }
 
-.site-header--open .brand { color: rgba(255,255,255,0.75); }
+.brand-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+  transition: opacity 0.3s;
+}
+
+.brand-logo--dark { display: none; }
+
+.site-header--open .brand-logo--light { display: none; }
+.site-header--open .brand-logo--dark  { display: block; }
 
 /* ── Nav desktop ── */
 .desktop-nav {
