@@ -2,6 +2,7 @@
 import type { Product, Civilite } from '~/types/auth'
 
 definePageMeta({ layout: 'full', middleware: 'auth' })
+useHead({ meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
 
 const { user } = useAuth()
 const { fetchAll } = useProduct()

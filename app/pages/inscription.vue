@@ -2,6 +2,7 @@
 import type { Civilite } from '~/types/auth'
 
 definePageMeta({ layout: 'full', middleware: 'guest' })
+useHead({ meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
 
 const { register } = useAuth()
 const router = useRouter()

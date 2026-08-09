@@ -2,6 +2,7 @@
 import type { Civilite, Order, StatutLivraison } from '~/types/auth'
 
 definePageMeta({ middleware: 'auth' })
+useHead({ meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
 
 const { user, updateMe, api } = useAuth()
 

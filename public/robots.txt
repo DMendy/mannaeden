@@ -1,2 +1,12 @@
-User-Agent: *
-Disallow:
+User-agent: *
+Allow: /
+
+Disallow: /compte
+Disallow: /panier
+Disallow: /connexion
+Disallow: /inscription
+Disallow: /reinitialiser-mot-de-passe
+Disallow: /commande
+Disallow: /admin
+
+Sitemap: https://mannaeden.com/sitemap.xml

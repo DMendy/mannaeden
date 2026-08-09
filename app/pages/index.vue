@@ -4,6 +4,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 definePageMeta({ layout: 'full' })
 
+useSeoMeta({
+  title: 'mannaeden — Graines de Foi',
+  description: 'Un planner chrétien ancré dans la foi, pour planifier chaque jour de l\'année avec intention et profondeur spirituelle.',
+  ogTitle: 'mannaeden — Graines de Foi',
+  ogDescription: 'Un planner chrétien ancré dans la foi, pour planifier chaque jour de l\'année avec intention et profondeur spirituelle.',
+  ogUrl: 'https://mannaeden.com/',
+})
+
 const LINE1 = 'Planifiez avec intention,'
 const line1Chars = [...LINE1].map(c => c === ' ' ? ' ' : c)
 

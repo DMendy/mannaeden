@@ -4,6 +4,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 definePageMeta({ layout: 'full' })
 
+useSeoMeta({
+  title: 'Qui suis-je ? — mannaeden',
+  description: 'Découvrez l\'histoire et la vision derrière mannaeden : un projet né d\'une foi profonde et d\'une envie de vivre chaque jour avec intention.',
+  ogTitle: 'Qui suis-je ? — mannaeden',
+  ogDescription: 'Découvrez l\'histoire et la vision derrière mannaeden : un projet né d\'une foi profonde et d\'une envie de vivre chaque jour avec intention.',
+  ogUrl: 'https://mannaeden.com/qui-sommes-nous',
+})
+
 const root = ref<HTMLElement | null>(null)
 let ctx: gsap.Context
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'full', middleware: 'guest' })
+useHead({ meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
 
 const config = useRuntimeConfig()
 const route = useRoute()

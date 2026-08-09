@@ -1,6 +1,14 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'full' })
 
+useSeoMeta({
+  title: 'Nos valeurs — mannaeden',
+  description: 'La foi au quotidien, l\'authenticité, la beauté du détail : les valeurs qui guident mannaeden et chaque page du planner Graines de Foi.',
+  ogTitle: 'Nos valeurs — mannaeden',
+  ogDescription: 'La foi au quotidien, l\'authenticité, la beauté du détail : les valeurs qui guident mannaeden et chaque page du planner Graines de Foi.',
+  ogUrl: 'https://mannaeden.com/nos-valeurs',
+})
+
 const valeurs = [
   {
     num: '01',

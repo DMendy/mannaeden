@@ -1,6 +1,14 @@
 <script setup lang="ts">
 definePageMeta({ layout: 'full' })
 
+useSeoMeta({
+  title: 'Contact — mannaeden',
+  description: 'Une question sur le planner Graines de Foi ? Contactez-nous, nous répondons avec soin.',
+  ogTitle: 'Contact — mannaeden',
+  ogDescription: 'Une question sur le planner Graines de Foi ? Contactez-nous, nous répondons avec soin.',
+  ogUrl: 'https://mannaeden.com/contact',
+})
+
 const config = useRuntimeConfig()
 const form = reactive({ nom: '', email: '', message: '' })
 const sent = ref(false)

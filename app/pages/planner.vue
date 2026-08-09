@@ -4,6 +4,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 definePageMeta({ layout: 'full' })
 
+useSeoMeta({
+  title: 'Pour qui est le planner ? — mannaeden',
+  description: 'Découvrez pour qui est conçu le planner Graines de Foi : pour les chrétiens qui veulent structurer leur vie spirituelle sur toute une année.',
+  ogTitle: 'Pour qui est le planner Graines de Foi ? — mannaeden',
+  ogDescription: 'Découvrez pour qui est conçu le planner Graines de Foi : pour les chrétiens qui veulent structurer leur vie spirituelle sur toute une année.',
+  ogUrl: 'https://mannaeden.com/planner',
+})
+
 const THEMES = [
   'Aimer et être aimé',
   'Avoir confiance en soi et en Dieu',

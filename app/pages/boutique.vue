@@ -5,6 +5,14 @@ import type { Product } from '~/types/auth'
 
 definePageMeta({ layout: 'full' })
 
+useSeoMeta({
+  title: 'Commander le planner Graines de Foi — mannaeden',
+  description: 'Commandez le planner chrétien mannaeden : un outil de planification spirituelle et quotidienne pour toute une année, ancré dans la foi.',
+  ogTitle: 'Commander le planner Graines de Foi — mannaeden',
+  ogDescription: 'Commandez le planner chrétien mannaeden : un outil de planification spirituelle et quotidienne pour toute une année, ancré dans la foi.',
+  ogUrl: 'https://mannaeden.com/boutique',
+})
+
 const root = ref<HTMLElement | null>(null)
 let ctx: gsap.Context
 const { user } = useAuth()
