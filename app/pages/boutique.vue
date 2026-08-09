@@ -13,6 +13,22 @@ useSeoMeta({
   ogUrl: 'https://mannaeden.com/boutique',
 })
 
+const LAUNCH_DATE = new Date('2026-08-17T00:00:00')
+
+function getTimeLeft() {
+  const diff = LAUNCH_DATE.getTime() - Date.now()
+  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
+  return {
+    days:    Math.floor(diff / 86400000),
+    hours:   Math.floor((diff % 86400000) / 3600000),
+    minutes: Math.floor((diff % 3600000)  / 60000),
+    seconds: Math.floor((diff % 60000)    / 1000),
+  }
+}
+
+const timeLeft = ref(getTimeLeft())
+let ticker: ReturnType<typeof setInterval>
+
 const root = ref<HTMLElement | null>(null)
 let ctx: gsap.Context
 const { user } = useAuth()
@@ -37,6 +53,7 @@ const contents = [
 ]
 
 onMounted(async () => {
+  ticker = setInterval(() => { timeLeft.value = getTimeLeft() }, 1000)
   gsap.registerPlugin(ScrollTrigger)
 
   try {
@@ -75,26 +92,15 @@ onMounted(async () => {
   }, root.value!)
 })
 
-onUnmounted(() => ctx?.revert())
+onUnmounted(() => { ctx?.revert(); clearInterval(ticker) })
 
 const prix = computed(() => {
   if (!product.value) return '39,90 €'
   return (product.value.prixUnitaire / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
 })
 
-const stockLabel = computed(() => {
-  if (!product.value) return 'En stock'
-  if (product.value.stock === 0) return 'Indisponible — en attente de stock'
-  if (product.value.stock <= 3) return `Plus que ${product.value.stock} en stock`
-  return 'En stock'
-})
-
-const stockClass = computed(() => {
-  if (!product.value) return 'stock--ok'
-  if (product.value.stock === 0) return 'stock--out'
-  if (product.value.stock <= 3) return 'stock--low'
-  return 'stock--ok'
-})
+const stockLabel = computed(() => 'Précommande — lancement le 17 août')
+const stockClass = computed(() => 'stock--pre')
 
 function handleOrder() {
   if (!user.value) {
@@ -163,13 +169,39 @@ function handleOrder() {
               <span class="product-stock" :class="stockClass">{{ stockLabel }}</span>
             </div>
 
-            <button
-              class="btn btn-primary product-cta"
-              :disabled="product?.stock === 0"
-              @click="handleOrder"
-            >
-              {{ product?.stock === 0 ? 'Indisponible' : 'Commander →' }}
+            <!-- Countdown -->
+            <div class="countdown">
+              <p class="countdown__label">Lancement officiel dans</p>
+              <div class="countdown__blocks">
+                <div class="countdown__block">
+                  <span class="countdown__num">{{ String(timeLeft.days).padStart(2, '0') }}</span>
+                  <span class="countdown__unit">jours</span>
+                </div>
+                <span class="countdown__sep">:</span>
+                <div class="countdown__block">
+                  <span class="countdown__num">{{ String(timeLeft.hours).padStart(2, '0') }}</span>
+                  <span class="countdown__unit">heures</span>
+                </div>
+                <span class="countdown__sep">:</span>
+                <div class="countdown__block">
+                  <span class="countdown__num">{{ String(timeLeft.minutes).padStart(2, '0') }}</span>
+                  <span class="countdown__unit">min</span>
+                </div>
+                <span class="countdown__sep">:</span>
+                <div class="countdown__block">
+                  <span class="countdown__num">{{ String(timeLeft.seconds).padStart(2, '0') }}</span>
+                  <span class="countdown__unit">sec</span>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary product-cta" @click="handleOrder">
+              Précommander →
             </button>
+
+            <p class="product-preorder-note">
+              Votre commande sera expédiée dès le lancement le 17 août.
+            </p>
 
             <p v-if="!user" class="product-auth-hint">
               Un compte est nécessaire pour commander.
@@ -291,10 +323,10 @@ function handleOrder() {
     <!-- ══ CTA FINAL ══ -->
     <section class="section section--deep cta-final" data-reveal>
       <div class="container--narrow" style="text-align: center">
-        <p class="verse-text" style="color: rgba(255,255,255,0.5); font-size: 0.9rem; font-style: normal; letter-spacing: 0.1em; text-transform: uppercase">Une seule année. Une vie transformée.</p>
+        <p class="verse-text" style="color: rgba(255,255,255,0.5); font-size: 0.9rem; font-style: normal; letter-spacing: 0.1em; text-transform: uppercase">Lancement officiel · 17 août 2026</p>
         <h2 class="cta-title">Prêt·e à commencer ce chemin ?</h2>
         <button class="btn btn-outline-light cta-btn" @click="handleOrder">
-          Commander Graines de Foi →
+          Précommander Graines de Foi →
         </button>
       </div>
     </section>
@@ -442,9 +474,74 @@ function handleOrder() {
   border-radius: 100px;
 }
 
-.stock--ok { background: rgba(53, 64, 40, 0.1); color: var(--color-green); }
+.stock--ok  { background: rgba(53, 64, 40, 0.1); color: var(--color-green); }
 .stock--low { background: rgba(184, 150, 46, 0.12); color: #8a6f1a; }
 .stock--out { background: rgba(162, 48, 48, 0.1); color: var(--color-danger); }
+.stock--pre { background: rgba(99, 76, 168, 0.1); color: #5b3fa8; }
+
+/* ── COUNTDOWN ── */
+.countdown {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+}
+
+.countdown__label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 0.875rem;
+}
+
+.countdown__blocks {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.countdown__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 52px;
+}
+
+.countdown__num {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-green-deep);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.countdown__unit {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+.countdown__sep {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--color-border);
+  margin-bottom: 1rem;
+  align-self: flex-start;
+  margin-top: 0.25rem;
+}
+
+.product-preorder-note {
+  margin-top: 0.875rem;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  text-align: center;
+}
 
 .product-cta {
   width: 100%;

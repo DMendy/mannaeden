@@ -96,7 +96,7 @@ onUnmounted(() => ctx?.revert())
           <span class="planner-hero__eyebrow eyebrow">Le planner mannaeden</span>
           <h1 class="planner-hero__title">Un compagnon de vie,<br><em>pas un simple agenda.</em></h1>
           <p class="planner-hero__sub">Versets, prière, écriture, planification — tout ce dont votre vie spirituelle a besoin, réuni dans un seul objet pensé avec soin.</p>
-          <NuxtLink to="/boutique" class="btn btn-outline-light" style="margin-top: 2rem">Commander →</NuxtLink>
+          <NuxtLink to="/boutique" class="btn btn-outline-light" style="margin-top: 2rem">Précommander — lancement le 17 août →</NuxtLink>
         </div>
         <div class="planner-hero__img">
           <div class="planner-mock">
@@ -213,7 +213,7 @@ onUnmounted(() => ctx?.revert())
       <div class="container--narrow" data-reveal>
         <h2 class="section-title" style="color: var(--color-accent-contrast)">Prêt à commencer ce chemin ?</h2>
         <p style="color: rgba(245,240,232,0.6); margin-top: 1rem; font-size: 1rem">Un seul exemplaire. Une seule année. Une vie transformée, un jour à la fois.</p>
-        <NuxtLink to="/boutique" class="btn btn-outline-light" style="margin-top: 2.5rem">Commander mannaeden</NuxtLink>
+        <NuxtLink to="/boutique" class="btn btn-outline-light" style="margin-top: 2.5rem">Précommander — lancement le 17 août →</NuxtLink>
       </div>
     </section>
 
