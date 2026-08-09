@@ -19,6 +19,7 @@ const product = ref<Product | null>(null)
 const loadingProduct = ref(true)
 const submitting = ref(false)
 const error = ref<string | null>(null)
+const quantite = ref(1)
 
 // Livraison sélectionnée (défaut : point relais classique)
 const selectedShipping = ref(SHIPPING_OPTIONS[0])
@@ -47,8 +48,12 @@ function formatPrice(cents: number) {
   return (cents / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
 }
 
+const maxQuantite = computed(() => Math.min(product.value?.stock ?? 1, 10))
 const prixProduit = computed(() => product.value?.prixUnitaire ?? 0)
-const prixTotal = computed(() => prixProduit.value + selectedShipping.value.price)
+const prixTotal = computed(() => prixProduit.value * quantite.value + selectedShipping.value.price)
+
+function decrementQty() { if (quantite.value > 1) quantite.value-- }
+function incrementQty() { if (quantite.value < maxQuantite.value) quantite.value++ }
 
 async function onSubmit() {
   if (!product.value) return
@@ -57,7 +62,7 @@ async function onSubmit() {
   try {
     const url = await createSession({
       productId: product.value.id,
-      quantite: 1,
+      quantite: quantite.value,
       civilite: civilite.value,
       nom: nom.value,
       prenom: prenom.value,
@@ -229,14 +234,19 @@ async function onSubmit() {
               </div>
               <div class="recap-info">
                 <p class="recap-name">{{ product.nom }}</p>
-                <p class="recap-detail">Planner physique · A5 · ×1</p>
+                <p class="recap-detail">Planner physique · A5</p>
+                <div class="qty-control">
+                  <button type="button" class="qty-btn" :disabled="quantite <= 1" @click="decrementQty">−</button>
+                  <span class="qty-value">{{ quantite }}</span>
+                  <button type="button" class="qty-btn" :disabled="quantite >= maxQuantite" @click="incrementQty">+</button>
+                </div>
               </div>
             </div>
 
             <div class="recap-breakdown">
               <div class="recap-line">
-                <span>Planner mannaeden</span>
-                <span>{{ formatPrice(prixProduit) }}</span>
+                <span>Planner mannaeden × {{ quantite }}</span>
+                <span>{{ formatPrice(prixProduit * quantite) }}</span>
               </div>
               <div class="recap-line">
                 <span>{{ selectedShipping.label }}</span>
@@ -457,6 +467,47 @@ async function onSubmit() {
   font-size: 0.82rem;
   color: var(--color-muted);
   margin-top: 0.25rem;
+}
+
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 6px;
+  background: #fff;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-green-deep);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.qty-btn:hover:not(:disabled) {
+  border-color: var(--color-green-mid);
+  background: rgba(53, 64, 40, 0.04);
+}
+
+.qty-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.qty-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+  color: var(--color-green-deep);
 }
 
 .recap-total {
