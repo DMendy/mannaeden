@@ -91,6 +91,7 @@ onMounted(() => {
   border: 1px solid var(--color-border);
   border-radius: 12px;
   max-width: 480px;
+  background: #fff;
 }
 
 .annulee-body {
