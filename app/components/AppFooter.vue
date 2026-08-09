@@ -12,6 +12,14 @@
           « Ta parole est une lampe à mes pieds. »
           <span>Psaume 119 : 105</span>
         </p>
+        <a href="https://www.instagram.com/mannaeden.co/" target="_blank" rel="noopener noreferrer" class="footer-insta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+          </svg>
+          @mannaeden.co
+        </a>
       </div>
 
       <!-- Navigation -->
@@ -119,6 +127,19 @@ const year = new Date().getFullYear()
   margin-top: 0.3rem;
   color: rgba(255, 255, 255, 0.15);
 }
+
+.footer-insta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.35);
+  transition: color 0.2s;
+}
+
+.footer-insta:hover { color: rgba(255, 255, 255, 0.75); }
 
 /* Columns */
 .footer-col-title {
