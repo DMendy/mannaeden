@@ -86,6 +86,7 @@ watch(() => router.currentRoute.value.path, () => {
           <NuxtLink to="/contact">Contact</NuxtLink>
           <span class="nav-sep" />
           <template v-if="user">
+            <NuxtLink v-if="user.role === 'ADMIN'" to="/admin/commandes" class="nav-admin-link">BO</NuxtLink>
             <NuxtLink to="/compte">{{ user.prenom }}</NuxtLink>
             <button class="link-btn" @click="handleLogout">Déconnexion</button>
           </template>
@@ -141,6 +142,9 @@ watch(() => router.currentRoute.value.path, () => {
 
         <footer class="overlay-footer">
           <template v-if="user">
+            <NuxtLink v-if="user.role === 'ADMIN'" to="/admin/commandes" class="overlay-auth-link" @click="menuOpen = false">
+              Back-office →
+            </NuxtLink>
             <NuxtLink to="/compte" class="overlay-auth-link" @click="menuOpen = false">
               Mon compte — <em>{{ user.prenom }}</em>
             </NuxtLink>
@@ -251,6 +255,23 @@ watch(() => router.currentRoute.value.path, () => {
 }
 
 .link-btn:hover { color: var(--color-danger); }
+
+.nav-admin-link {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-green);
+  border: 1px solid var(--color-green);
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-admin-link:hover {
+  background: var(--color-green);
+  color: #fff;
+}
 
 .btn--nav {
   padding: 0.5rem 1.25rem;
