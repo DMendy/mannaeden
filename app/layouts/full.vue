@@ -140,24 +140,22 @@ watch(() => router.currentRoute.value.path, () => {
         </nav>
 
         <footer class="overlay-footer">
-          <div class="overlay-auth">
-            <template v-if="user">
-              <NuxtLink to="/compte" class="overlay-auth-link" @click="menuOpen = false">
-                Mon compte — <em>{{ user.prenom }}</em>
-              </NuxtLink>
-              <button class="overlay-auth-link overlay-auth-link--muted" @click="handleLogout">
-                Déconnexion
-              </button>
-            </template>
-            <template v-else>
-              <NuxtLink to="/connexion" class="overlay-auth-link overlay-auth-link--muted" @click="menuOpen = false">
-                Connexion
-              </NuxtLink>
-              <NuxtLink to="/inscription" class="overlay-auth-link" @click="menuOpen = false">
-                Commencer →
-              </NuxtLink>
-            </template>
-          </div>
+          <template v-if="user">
+            <NuxtLink to="/compte" class="overlay-auth-link" @click="menuOpen = false">
+              Mon compte — <em>{{ user.prenom }}</em>
+            </NuxtLink>
+            <button class="overlay-auth-link overlay-auth-link--muted" @click="handleLogout">
+              Déconnexion
+            </button>
+          </template>
+          <template v-else>
+            <NuxtLink to="/connexion" class="overlay-auth-connexion" @click="menuOpen = false">
+              Connexion
+            </NuxtLink>
+            <NuxtLink to="/inscription" class="overlay-auth-cta" @click="menuOpen = false">
+              Commencer →
+            </NuxtLink>
+          </template>
           <p class="overlay-verse">
             « Ma nourriture est de faire la volonté de celui qui m'a envoyé. »
             <span>Jean 4 : 34</span>
@@ -376,19 +374,13 @@ watch(() => router.currentRoute.value.path, () => {
   position: absolute;
   bottom: 0; left: 0; right: 0;
   z-index: 2;
-  padding: 1.75rem clamp(2rem, 8vw, 8rem);
+  padding: 1.5rem clamp(2rem, 8vw, 8rem);
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid rgba(255,255,255,0.07);
   flex-wrap: wrap;
   gap: 1rem;
-}
-
-.overlay-auth {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
 }
 
 .overlay-auth-link {
@@ -411,6 +403,32 @@ watch(() => router.currentRoute.value.path, () => {
 .overlay-auth-link:hover { color: #fff; }
 .overlay-auth-link--muted { color: rgba(255,255,255,0.3); }
 .overlay-auth-link--muted:hover { color: rgba(255,255,255,0.6); }
+
+.overlay-auth-connexion {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  transition: color 0.2s;
+}
+
+.overlay-auth-connexion:hover { color: rgba(255,255,255,0.9); }
+
+.overlay-auth-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.4rem;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fff;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.overlay-auth-cta:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.6);
+}
 
 .overlay-verse {
   font-family: var(--font-serif);

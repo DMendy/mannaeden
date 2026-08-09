@@ -166,17 +166,42 @@ watch(() => router.currentRoute.value.path, () => {
     position: fixed;
     inset: 0;
     top: 61px;
-    background: var(--color-bg);
+    background: var(--color-green-deep);
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
-    font-size: 1.1rem;
+    gap: 1.75rem;
     z-index: 99;
   }
 
   .nav--open { display: flex; }
   .nav-sep { display: none; }
-  .btn--nav { padding: 0.7rem 2rem; }
+
+  .nav a {
+    font-size: 1.3rem;
+    font-family: var(--font-serif);
+    font-weight: 600;
+    color: rgba(255,255,255,0.72);
+  }
+
+  .nav a:hover,
+  .nav a.router-link-active { color: #fff; }
+
+  .nav a.btn--nav,
+  .nav a.btn--nav:hover,
+  .nav a.btn--nav:focus {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    padding: 0.7rem 2rem;
+    background: transparent;
+  }
+
+  .link-btn {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.4);
+  }
 }
 </style>

@@ -147,7 +147,7 @@ const total = computed(() => {
 .succes-icon {
   width: 72px;
   height: 72px;
-  color: var(--color-gold);
+  color: rgba(245, 240, 232, 0.7);
 }
 
 .succes-icon svg {
@@ -224,7 +224,7 @@ const total = computed(() => {
 .recap-id {
   font-family: var(--font-serif);
   letter-spacing: 0.08em;
-  color: var(--color-gold);
+  color: rgba(245, 240, 232, 0.85);
 }
 
 .recap-row--total {
