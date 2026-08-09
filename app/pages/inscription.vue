@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Civilite } from '~/types/auth'
 
-definePageMeta({ middleware: 'guest' })
+definePageMeta({ layout: 'full', middleware: 'guest' })
 
 const { register } = useAuth()
 const router = useRouter()
@@ -136,11 +136,11 @@ async function onSubmit() {
 
 <style scoped>
 .auth-wrapper {
-  min-height: calc(100dvh - 70px);
+  min-height: 100dvh;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 3rem 1.5rem 5rem;
+  padding: 6rem 1.5rem 5rem;
 }
 
 .auth-page {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ middleware: 'guest' })
+definePageMeta({ layout: 'full', middleware: 'guest' })
 
 const { login } = useAuth()
 const router = useRouter()
@@ -77,11 +77,11 @@ async function onSubmit() {
 
 <style scoped>
 .auth-wrapper {
-  min-height: calc(100dvh - 70px);
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 1.5rem;
+  padding: 6rem 1.5rem 3rem;
 }
 
 .auth-page {
