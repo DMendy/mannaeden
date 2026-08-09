@@ -11,6 +11,7 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'fr' },
       meta: [
         { name: 'description', content: 'Un planner chrétien ancré dans la foi, pour structurer et habiter chaque jour de l\'année avec intention.' },
+        { name: 'google-site-verification', content: 'x9nLoZjI6-d0-8cLj9lJkK1wL_v3-U7fdbHGy_-YGsg' },
         { property: 'og:site_name', content: 'mannaeden' },
         { property: 'og:type', content: 'website' },
         { property: 'og:locale', content: 'fr_FR' },
