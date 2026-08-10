@@ -25,7 +25,7 @@ const quantite = ref(1)
 const selectedShipping = ref(SHIPPING_OPTIONS[0])
 
 // Form — pre-filled from user profile
-const civilite = ref<Civilite>(user.value?.civilite ?? 'M')
+const civilite = ref<Civilite | ''>(user.value?.civilite ?? '')
 const nom = ref(user.value?.nom ?? '')
 const prenom = ref(user.value?.prenom ?? '')
 const telephone = ref(user.value?.telephone ?? '')
@@ -57,6 +57,7 @@ function incrementQty() { if (quantite.value < maxQuantite.value) quantite.value
 
 async function onSubmit() {
   if (!product.value) return
+  if (!civilite.value) { error.value = 'Veuillez choisir une civilité.'; return }
   error.value = null
   submitting.value = true
   try {
@@ -120,7 +121,8 @@ async function onSubmit() {
               <div class="field-row">
                 <label class="field">
                   <span class="field-label">Civilité</span>
-                  <select v-model="civilite" class="field-select">
+                  <select v-model="civilite" class="field-select" required>
+                    <option value="" disabled>Choisir *</option>
                     <option value="M">M.</option>
                     <option value="MME">Mme</option>
                   </select>

@@ -61,8 +61,8 @@ async function onSubmit() {
         <div class="field-row">
           <div class="field field--civil">
             <label class="field-label" for="civilite">Civilité</label>
-            <select id="civilite" v-model="civilite" class="field-select">
-              <option value="">—</option>
+            <select id="civilite" v-model="civilite" class="field-select" required>
+              <option value="" disabled>Choisir *</option>
               <option value="M">M.</option>
               <option value="MME">Mme</option>
             </select>
