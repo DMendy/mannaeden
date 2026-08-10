@@ -2,7 +2,7 @@
 definePageMeta({ layout: 'full', middleware: 'guest' })
 useHead({ meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
 
-const { login } = useAuth()
+const { login, user } = useAuth()
 const router = useRouter()
 const route = useRoute()
 
@@ -16,7 +16,9 @@ async function onSubmit() {
   loading.value = true
   try {
     await login({ email: email.value, password: password.value })
-    const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/compte'
+    const redirect = typeof route.query.redirect === 'string'
+      ? route.query.redirect
+      : user.value?.role === 'ADMIN' ? '/admin/commandes' : '/compte'
     router.push(redirect)
   } catch (err) {
     error.value = err instanceof Error ? err.message : 'Connexion impossible.'

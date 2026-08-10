@@ -4,7 +4,8 @@ import type { Civilite, Order, StatutLivraison } from '~/types/auth'
 definePageMeta({ middleware: 'auth' })
 useHead({ meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
 
-const { user, updateMe, api } = useAuth()
+const { user, updateMe, api, fetchMe } = useAuth()
+onMounted(() => fetchMe())
 
 // Changement de mot de passe
 const showPwdForm = ref(false)
