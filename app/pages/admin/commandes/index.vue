@@ -76,6 +76,7 @@ function formatPrice(cents: number) {
         <span>Adresse</span>
         <span>Date</span>
         <span>Qté</span>
+        <span>Livraison</span>
         <span>Montant</span>
         <span>Statut</span>
         <span />
@@ -97,6 +98,7 @@ function formatPrice(cents: number) {
         </span>
         <span class="row-date">{{ formatDate(order.createdAt) }}</span>
         <span class="row-qty">× {{ order.quantite }}</span>
+        <span class="row-livraison">{{ order.modeLivraison }}</span>
         <span class="row-price">{{ formatPrice(order.montantTotal) }}</span>
         <span>
           <span class="badge" :class="STATUT_COLORS[order.statutLivraison]">
@@ -151,7 +153,7 @@ function formatPrice(cents: number) {
 
 .table-head {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 0.5fr 1fr 1fr 32px;
+  grid-template-columns: 2fr 1fr 1fr 0.5fr 1.2fr 1fr 1fr 32px;
   gap: 1rem;
   padding: 0.75rem 1.25rem;
   background: #fafafa;
@@ -165,7 +167,7 @@ function formatPrice(cents: number) {
 
 .table-row {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 0.5fr 1fr 1fr 32px;
+  grid-template-columns: 2fr 1fr 1fr 0.5fr 1.2fr 1fr 1fr 32px;
   gap: 1rem;
   padding: 1rem 1.25rem;
   border-bottom: 1px solid var(--color-border);
@@ -185,6 +187,7 @@ function formatPrice(cents: number) {
 .row-adresse-cp { font-size: 0.75rem; color: var(--color-muted); }
 .row-date { font-size: 0.85rem; }
 .row-qty { font-size: 0.85rem; font-weight: 600; color: var(--color-green-deep); }
+.row-livraison { font-size: 0.78rem; color: var(--color-muted); line-height: 1.3; }
 .row-price { font-size: 0.88rem; font-weight: 500; font-family: var(--font-serif); }
 .row-arrow { color: var(--color-muted); font-size: 0.85rem; }
 
@@ -234,7 +237,7 @@ function formatPrice(cents: number) {
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
   }
-  .row-adresse, .row-date, .row-qty, .row-price { display: none; }
+  .row-adresse, .row-date, .row-qty, .row-livraison, .row-price { display: none; }
   .row-arrow { grid-row: 1 / 3; justify-self: end; align-self: center; }
 }
 </style>

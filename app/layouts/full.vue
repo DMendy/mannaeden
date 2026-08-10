@@ -86,7 +86,7 @@ watch(() => router.currentRoute.value.path, () => {
           <NuxtLink to="/contact">Contact</NuxtLink>
           <span class="nav-sep" />
           <template v-if="user">
-            <NuxtLink v-if="user.role === 'ADMIN'" to="/admin/commandes" class="nav-admin-link">BO</NuxtLink>
+            <NuxtLink v-if="user?.role === 'ADMIN'" to="/admin/commandes" class="nav-admin-link">BO</NuxtLink>
             <NuxtLink to="/compte">{{ user.prenom }}</NuxtLink>
             <button class="link-btn" @click="handleLogout">Déconnexion</button>
           </template>
@@ -142,7 +142,7 @@ watch(() => router.currentRoute.value.path, () => {
 
         <footer class="overlay-footer">
           <template v-if="user">
-            <NuxtLink v-if="user.role === 'ADMIN'" to="/admin/commandes" class="overlay-auth-link" @click="menuOpen = false">
+            <NuxtLink v-if="user?.role === 'ADMIN'" to="/admin/commandes" class="overlay-auth-link" @click="menuOpen = false">
               Back-office →
             </NuxtLink>
             <NuxtLink to="/compte" class="overlay-auth-link" @click="menuOpen = false">
