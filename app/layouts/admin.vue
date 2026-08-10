@@ -1,7 +1,14 @@
 <script setup lang="ts">
-const { user, logout } = useAuth()
+const { user, logout, fetchMe } = useAuth()
 const router = useRouter()
 const route = useRoute()
+
+onMounted(async () => {
+  await fetchMe()
+  if (user.value?.role !== 'ADMIN') {
+    router.push('/')
+  }
+})
 
 function handleLogout() {
   logout()
