@@ -6,6 +6,32 @@ useHead({ meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
 
 const { user, updateMe, api } = useAuth()
 
+// Changement de mot de passe
+const showPwdForm = ref(false)
+const pwdCurrent = ref('')
+const pwdNew = ref('')
+const pwdConfirm = ref('')
+const pwdLoading = ref(false)
+const pwdError = ref('')
+const pwdSuccess = ref(false)
+
+async function onChangePwd() {
+  pwdError.value = ''
+  if (pwdNew.value !== pwdConfirm.value) { pwdError.value = 'Les mots de passe ne correspondent pas.'; return }
+  if (pwdNew.value.length < 8) { pwdError.value = 'Le nouveau mot de passe doit faire au moins 8 caractères.'; return }
+  pwdLoading.value = true
+  try {
+    await api('/auth/change-password', { method: 'PATCH', body: { currentPassword: pwdCurrent.value, newPassword: pwdNew.value } })
+    pwdSuccess.value = true
+    pwdCurrent.value = ''; pwdNew.value = ''; pwdConfirm.value = ''
+    setTimeout(() => { pwdSuccess.value = false; showPwdForm.value = false }, 2500)
+  } catch (e: any) {
+    pwdError.value = e.message || 'Mot de passe actuel incorrect.'
+  } finally {
+    pwdLoading.value = false
+  }
+}
+
 const orders = ref<Order[]>([])
 const ordersLoading = ref(true)
 
@@ -264,10 +290,39 @@ async function saveProfile() {
         <div v-if="success" class="toast">Adresse mise à jour.</div>
       </Transition>
 
+      <!-- Changement mot de passe -->
+      <div class="pwd-section">
+        <button class="link-subtle" @click="showPwdForm = !showPwdForm">
+          {{ showPwdForm ? 'Annuler' : 'Changer de mot de passe' }}
+        </button>
+
+        <Transition name="toast">
+          <div v-if="pwdSuccess" class="toast">Mot de passe mis à jour.</div>
+        </Transition>
+
+        <form v-if="showPwdForm" class="pwd-form" @submit.prevent="onChangePwd">
+          <label class="field">
+            <span class="field-label">Mot de passe actuel</span>
+            <input v-model="pwdCurrent" type="password" class="field-input" required autocomplete="current-password" />
+          </label>
+          <label class="field">
+            <span class="field-label">Nouveau mot de passe</span>
+            <input v-model="pwdNew" type="password" class="field-input" required autocomplete="new-password" minlength="8" />
+          </label>
+          <label class="field">
+            <span class="field-label">Confirmer le nouveau mot de passe</span>
+            <input v-model="pwdConfirm" type="password" class="field-input" required autocomplete="new-password" />
+          </label>
+          <p v-if="pwdError" class="pwd-error">{{ pwdError }}</p>
+          <button type="submit" class="btn btn-primary" :disabled="pwdLoading">
+            {{ pwdLoading ? 'Mise à jour...' : 'Mettre à jour' }}
+          </button>
+        </form>
+      </div>
+
       <!-- Actions -->
       <div class="account-actions">
         <NuxtLink to="/panier" class="btn btn-primary">Commander le planner</NuxtLink>
-        <NuxtLink to="/reinitialiser-mot-de-passe" class="link-subtle">Changer de mot de passe</NuxtLink>
       </div>
 
     </div>
@@ -431,6 +486,28 @@ async function saveProfile() {
   text-underline-offset: 3px;
 }
 .link-subtle:hover { color: var(--color-text); }
+
+.pwd-section {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pwd-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.pwd-error {
+  font-size: 0.82rem;
+  color: var(--color-danger);
+}
 
 /* ── COMMANDES ── */
 .orders-card {
