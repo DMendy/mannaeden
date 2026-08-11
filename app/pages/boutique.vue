@@ -94,9 +94,24 @@ onMounted(async () => {
 
 onUnmounted(() => { ctx?.revert(); clearInterval(ticker) })
 
-const prix = computed(() => {
-  if (!product.value) return '39,90 €'
+const isPrecommande = computed(() => {
+  if (!product.value?.precommandeActive) return false
+  const fin = product.value.precommandeFin
+  if (!fin) return true
+  return new Date(fin) > new Date()
+})
+
+const prixOriginal = computed(() => {
+  if (!product.value) return null
   return (product.value.prixUnitaire / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
+})
+
+const prix = computed(() => {
+  if (!product.value) return '33,92 €'
+  const p = isPrecommande.value
+    ? Math.round(product.value.prixUnitaire * 0.85)
+    : product.value.prixUnitaire
+  return (p / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })
 })
 
 const stockLabel = computed(() => 'Précommande — lancement le 17 août')
@@ -165,7 +180,11 @@ function handleOrder() {
 
           <div v-else class="product-bottom">
             <div class="product-price-row">
-              <span class="product-price">{{ prix }}</span>
+              <div class="price-group">
+                <span v-if="isPrecommande" class="price-badge">−15&nbsp;%</span>
+                <span class="product-price">{{ prix }}</span>
+                <span v-if="isPrecommande && prixOriginal" class="product-price-original">{{ prixOriginal }}</span>
+              </div>
               <span class="product-stock" :class="stockClass">{{ stockLabel }}</span>
             </div>
 
@@ -457,6 +476,27 @@ function handleOrder() {
   align-items: center;
   gap: 1.25rem;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.price-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.price-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: 100px;
+  background: rgba(99, 76, 168, 0.12);
+  color: #5b3fa8;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .product-price {
@@ -464,6 +504,15 @@ function handleOrder() {
   font-size: 2.4rem;
   font-weight: 600;
   color: var(--color-green-deep);
+}
+
+.product-price-original {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-muted);
+  text-decoration: line-through;
+  opacity: 0.7;
 }
 
 .product-stock {

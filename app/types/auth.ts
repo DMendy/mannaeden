@@ -50,6 +50,8 @@ export interface Product {
   prixUnitaire: number
   stock: number
   imageUrl: string | null
+  precommandeActive: boolean
+  precommandeFin: string | null
   createdAt: string
   updatedAt: string
 }
