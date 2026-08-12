@@ -52,6 +52,7 @@ watch(() => router.currentRoute.value.path, () => {
     </header>
 
     <main class="container page">
+      <AppBreadcrumb />
       <slot />
     </main>
     <AppFooter />
